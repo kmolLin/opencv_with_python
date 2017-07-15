@@ -123,7 +123,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             ((x, y), radius) = cv2.minEnclosingCircle(c)
             M = cv2.moments(c)
             center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
-            #print("{}\t{}".format(center[0],center[1] ))
+            print("{}\t{}".format(center[0],center[1] ))
             if radius > 10:
                 cv2.circle(frame1, (int(x), int(y)), int(radius),
                 (0, 255, 255), 2)

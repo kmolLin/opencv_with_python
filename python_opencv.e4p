@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project python_opencv -->
-<!-- Saved: 2017-07-14, 22:40:10 -->
+<!-- Saved: 2017-07-15, 22:10:10 -->
 <!-- Copyright (C) 2017 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -13,15 +13,14 @@
   <Email></Email>
   <Eol index="0"/>
   <Sources>
-    <Source>Ui_mainwindow.py</Source>
-    <Source>__init__.py</Source>
-    <Source>ball_tracking.py</Source>
-    <Source>camera.py</Source>
-    <Source>main.py</Source>
-    <Source>mainwindow.py</Source>
+    <Source>core/VideoWidget.py</Source>
+    <Source>core/mainwindow.py</Source>
+    <Source>core/ui/Ui_mainwindow.py</Source>
+    <Source>core/webcam.py</Source>
+    <Source>launch.py</Source>
   </Sources>
   <Forms>
-    <Form>mainwindow.ui</Form>
+    <Form>core/ui/mainwindow.ui</Form>
   </Forms>
   <Translations/>
   <Resources/>
@@ -29,6 +28,7 @@
   <Others>
     <Other>README.md</Other>
   </Others>
+  <MainScript>launch.py</MainScript>
   <Vcs>
     <VcsType>None</VcsType>
   </Vcs>
