@@ -1,36 +1,27 @@
 # -*- coding: utf-8 -*-
 
-"""
-Module implementing MainWindow.
-"""
-
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from threading import Thread
+from collections import deque
+from .webcam import Webcam
+from .VideoWidget import VideoWidget
 
 import numpy as np
 import datetime
 import cv2
 import sys
 
-from Ui_mainwindow import Ui_MainWindow
+from .ui.Ui_mainwindow import Ui_MainWindow
 
 greenLower = (100, 43, 46)
 greenUpper = (124, 255, 255)
+pts = deque(maxlen=64)
 
 class MainWindow(QMainWindow, Ui_MainWindow):
-    """
-    Class documentation goes here.
-    """
+
     def __init__(self, parent=None):
-        """
-        Constructor
-        
-        @param parent reference to the parent widget
-        @type QWidget
-        """
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
         self.running = False
@@ -84,26 +75,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             frame = self.video_stream.read()
             if self.binary_toggle:
                 #(grabbed, frame) = self.video_stream.read()
-                
-                hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-                mask = cv2.inRange(hsv, greenLower, greenUpper)
-                mask = cv2.erode(mask, None, iterations=2)
-                mask = cv2.dilate(mask, None, iterations=2)
-                
-                cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
-                cv2.CHAIN_APPROX_SIMPLE)[-2]
-                
-                center = None
-                if len(cnts) > 0:
-                    c = max(cnts, key=cv2.contourArea)
-                    ((x, y), radius) = cv2.minEnclosingCircle(c)
-                    M = cv2.moments(c)
-                    center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
-                    print("{}\t{}".format(center[0],center[1] ))
-                    if radius > 10:
-                        cv2.circle(frame, (int(x), int(y)), int(radius),
-                        (0, 255, 255), 2)
-                    cv2.circle(frame, center, 5, (0, 0, 255), -1)
+                self.trackObject(frame)
 
                 #frame = self.clean_img(frame)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -135,56 +107,40 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.video_stream.stop()
         self.close()
         sys.exit()
+        
+    def trackObject(self, frame1):
+        hsv = cv2.cvtColor(frame1, cv2.COLOR_BGR2HSV)
+        mask = cv2.inRange(hsv, greenLower, greenUpper)
+        mask = cv2.erode(mask, None, iterations=2)
+        mask = cv2.dilate(mask, None, iterations=2)
+        
+        cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
+        cv2.CHAIN_APPROX_SIMPLE)[-2]
+        
+        center = None
+        if len(cnts) > 0:
+            c = max(cnts, key=cv2.contourArea)
+            ((x, y), radius) = cv2.minEnclosingCircle(c)
+            M = cv2.moments(c)
+            center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
+            #print("{}\t{}".format(center[0],center[1] ))
+            if radius > 10:
+                cv2.circle(frame1, (int(x), int(y)), int(radius),
+                (0, 255, 255), 2)
+            cv2.circle(frame1, center, 5, (0, 0, 255), -1)
+            
+        pts.appendleft(center)
+        #print(pts)
+        for i in range(1, len(pts)):
+            if pts[i - 1] is None or pts[i] is None:
+                continue
+            thickness = int(np.sqrt(64/ float(i + 1)) * 2.5)
+            cv2.line(frame1, pts[i - 1], pts[i], (0, 0, 255), thickness)
 
 
-class VideoWidget(QWidget):
-    def __init__(self, parent=None):
-        super(VideoWidget, self).__init__(parent)
-        self.image = None
-
-    def setImage(self, image):
-        self.image = image
-        sz = image.size()
-        self.setMinimumSize(sz)
-        self.update()
-
-    def paintEvent(self, event):
-        qp = QPainter()
-        qp.begin(self)
-        if self.image:
-            qp.drawImage(QPoint(0, 0), self.image)
-        qp.end()
-
-
-class Webcam:
-    def __init__(self, src=0):
-        self.stream = cv2.VideoCapture(src)
-        self.grabbed, self.frame = self.stream.read()
-        self.stopped = False
-
-    def start(self):
-        t = Thread(target=self.update)
-        t.daemon = True
-        t.start()
-        return self
-
-    def update(self):
-        while True:
-            if self.stopped:
-                return
-
-            (self.grabbed, self.frame) = self.stream.read()
-
-    def read(self):
-        return self.frame
-
-    def stop(self):
-        self.stopped = True
-
-
-
-
+'''
 app = QApplication(sys.argv)
 window = MainWindow()
 window.show()
 app.exec_()
+'''
