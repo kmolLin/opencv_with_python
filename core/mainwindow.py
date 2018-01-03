@@ -13,7 +13,7 @@ import datetime
 import cv2
 import sys
 
-from .ui.Ui_mainwindow import Ui_MainWindow
+from .Ui_mainwindow import Ui_MainWindow
 
 greenLower = (100, 43, 46)
 greenUpper = (124, 255, 255)
@@ -34,6 +34,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.startButton.clicked.connect(self.start_clicked)
         self.showBinaryButton.clicked.connect(self.binary_clicked)
+        self.getimage.clicked.connect(self.catchimage)
+        
+
 
         self.setup_timers()
         self.startButton.setFocus()
@@ -95,6 +98,58 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         clean = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
         clean = cv2.merge((clean, clean, clean))
         return clean
+        
+    def loadimage(self, name='buffer.png'):
+        image = cv2.imread(name, flags=cv2.IMREAD_COLOR)
+        cv2.namedWindow('image',cv2.WINDOW_AUTOSIZE) 
+        self.calctrackobject(image)
+        
+        self.generatearray()
+        
+        
+        
+        cv2.imshow('image',image) 
+        cv2.waitKey(0) 
+        cv2.destroyAllWindows()
+    
+    def generatearray(self):
+        
+        yplane = np.mat([[self.gp1x.value(),self.gp1y.value(), 1 ], 
+                                  [self.gp2x.value(),self.gp2y.value(), 1 ], 
+                                  [self.gp3x.value(),self.gp3y.value(), 1 ], 
+                                  [self.gp4x.value(),self.gp4y.value(), 1 ]])
+                                  
+        Aplane = np.mat([[self.pp1x.value(),self.pp1y.value(), 1 ], 
+                                  [self.pp2x.value(),self.pp2y.value(), 1 ], 
+                                  [self.pp3x.value(),self.pp3y.value(), 1 ], 
+                                  [self.pp4x.value(),self.pp4y.value(), 1 ]])
+        #np.linalg.inv
+        X = np.linalg.inv(np.dot( Aplane.transpose(), Aplane)*np.dot( yplane.transpose(), Aplane))
+        print(yplane)
+        print("----------------------------------")
+        print(Aplane)
+        print("----------------------------------")
+        print(X)
+        
+    
+    
+    def calctrackobject(self, image):
+        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        mask = cv2.inRange(hsv, greenLower, greenUpper)
+        mask = cv2.erode(mask, None, iterations=2)
+        mask = cv2.dilate(mask, None, iterations=2)
+        cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
+        cv2.CHAIN_APPROX_SIMPLE)[-2]
+        
+        
+        center = None
+        if len(cnts) > 0:
+            c = max(cnts, key=cv2.contourArea)
+            ((x, y), radius) = cv2.minEnclosingCircle(c)
+            M = cv2.moments(c)
+            center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
+            print("{}\t{}".format(center[0],center[1] ))
+        
 
     def clear_timers(self):
         while self.timers:
@@ -107,6 +162,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.video_stream.stop()
         self.close()
         sys.exit()
+    
+    """TODO build catch image"""
+    def catchimage(self):
+        im = self.video_stream.read()
+        camera_capture = im
+        file = "buffer.png"
+        cv2.imwrite(file, camera_capture)
+        self.loadimage()
+        
+        
         
     def trackObject(self, frame1):
         hsv = cv2.cvtColor(frame1, cv2.COLOR_BGR2HSV)
@@ -138,9 +203,41 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             cv2.line(frame1, pts[i - 1], pts[i], (0, 0, 255), thickness)
 
 
-'''
-app = QApplication(sys.argv)
-window = MainWindow()
-window.show()
-app.exec_()
-'''
+    
+    @pyqtSlot()
+    def on_load_clicked(self):
+        filename, _ = QFileDialog.getOpenFileName(self, "Open File", ".", "Text files (*.txt)")
+        if filename:
+            with open(filename, 'r') as f:
+                read_list = eval(f.read())
+            for (x, y), (spinbox_x, spinbox_y) in zip(read_list, (
+                (self.gp1x, self.gp1y),
+                (self.gp2x, self.gp2y),
+                (self.gp3x, self.gp3y),
+                (self.gp4x, self.gp4y),
+                (self.pp1x, self.pp1y),
+                (self.pp2x, self.pp2y),
+                (self.pp3x, self.pp3y),
+                (self.pp4x, self.pp4y)
+            )):
+                spinbox_x.setValue(x)
+                spinbox_y.setValue(y)
+    
+    @pyqtSlot()
+    def on_output_clicked(self):
+        filename, _ = QFileDialog.getSaveFileName(self, "Save File", "./test.txt", "Text files (*.txt)")
+        if filename:
+            data = []
+            for spinbox_x, spinbox_y in (
+                (self.gp1x, self.gp1y),
+                (self.gp2x, self.gp2y),
+                (self.gp3x, self.gp3y),
+                (self.gp4x, self.gp4y),
+                (self.pp1x, self.pp1y),
+                (self.pp2x, self.pp2y),
+                (self.pp3x, self.pp3y),
+                (self.pp4x, self.pp4y)
+            ):
+                data.append((spinbox_x.value(), spinbox_y.value()))
+            with open(filename, 'w') as f:
+                f.write(str(data))
