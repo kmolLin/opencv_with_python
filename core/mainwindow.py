@@ -124,11 +124,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                   [self.pp3x.value(),self.pp3y.value(), 1 ], 
                                   [self.pp4x.value(),self.pp4y.value(), 1 ]])
         #np.linalg.inv
-        X = np.linalg.inv(np.dot( Aplane.transpose(), Aplane)*np.dot( yplane.transpose(), Aplane))
-        print(yplane)
-        print("----------------------------------")
-        print(Aplane)
-        print("----------------------------------")
+        X = np.linalg.inv(np.dot(np.dot( Aplane.transpose(), Aplane), np.dot( yplane.transpose(), Aplane)))
+
         print(X)
         
     
