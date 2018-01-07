@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project python_opencv -->
-<!-- Saved: 2017-12-19, 21:47:40 -->
-<!-- Copyright (C) 2017 ,  -->
+<!-- Saved: 2018-01-07, 23:19:50 -->
+<!-- Copyright (C) 2018 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
   <Hash>334bfc0e68abac582e0302c199251a5e91b2282e</Hash>
@@ -13,16 +13,16 @@
   <Email></Email>
   <Eol index="0"/>
   <Sources>
+    <Source>core/Ui_mainwindow.py</Source>
     <Source>core/VideoWidget.py</Source>
     <Source>core/mainwindow.py</Source>
-    <Source>core/ui/Ui_mainwindow.py</Source>
     <Source>core/webcam.py</Source>
     <Source>launch.py</Source>
     <Source>testcodeandimage/test1code.py</Source>
     <Source>testcodeandimage/test2.py</Source>
   </Sources>
   <Forms>
-    <Form>core/ui/mainwindow.ui</Form>
+    <Form>core/mainwindow.ui</Form>
   </Forms>
   <Translations/>
   <Resources/>
