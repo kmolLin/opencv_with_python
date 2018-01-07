@@ -26,7 +26,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.running = False
         self.binary_toggle = False
-        self.video_stream = Webcam(src=0).start()
+        self.video_stream = Webcam(src=1).start()
 
         self.timers = list()
         self.VidFrameGUI = self.VidFrame
@@ -100,17 +100,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         return clean
         
     def loadimage(self, name='buffer.png'):
-        image = cv2.imread(name, flags=cv2.IMREAD_COLOR)
-        cv2.namedWindow('image',cv2.WINDOW_AUTOSIZE) 
-        self.calctrackobject(image)
+        #image = cv2.imread(name, flags=cv2.IMREAD_COLOR)
+        #cv2.namedWindow('image',cv2.WINDOW_AUTOSIZE) 
+        #self.calctrackobject(image)
         
         self.generatearray()
         
         
         
-        cv2.imshow('image',image) 
-        cv2.waitKey(0) 
-        cv2.destroyAllWindows()
+        #cv2.imshow('image',image) 
+        #cv2.waitKey(0) 
+        #cv2.destroyAllWindows()
     
     def generatearray(self):
         
@@ -124,10 +124,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                   [self.pp3x.value(),self.pp3y.value(), 1 ], 
                                   [self.pp4x.value(),self.pp4y.value(), 1 ]])
         #np.linalg.inv
-        X = np.linalg.inv(np.dot(np.dot( Aplane.transpose(), Aplane), np.dot( yplane.transpose(), Aplane)))
-
+        X = np.linalg.inv(np.dot( Aplane.transpose(), Aplane))*np.dot( Aplane.transpose(), yplane)
+        self.xtranslate = X
         print(X)
         
+    def checkpoint(self):
+        pixelx, pixely = self.inputpixelX.value(), self.inputpixelY.value()
+        endpoint =  [pixelx, pixely, 1]*self.xtranslate
+        print(endpoint)
     
     
     def calctrackobject(self, image):
@@ -238,3 +242,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 data.append((spinbox_x.value(), spinbox_y.value()))
             with open(filename, 'w') as f:
                 f.write(str(data))
+    
+    @pyqtSlot()
+    def on_getpixel_clicked(self):
+        self.checkpoint()
