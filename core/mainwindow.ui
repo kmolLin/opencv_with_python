@@ -31,7 +31,7 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="2">
+        <item row="0" column="3">
          <widget class="QPushButton" name="startButton">
           <property name="text">
            <string>Start Video</string>
@@ -44,14 +44,26 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="3">
+        <item row="0" column="4">
          <widget class="QPushButton" name="showBinaryButton">
           <property name="text">
            <string>tracking</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="4">
+        <item row="0" column="6">
+         <widget class="QLabel" name="currDateLabel">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>DD-MMM-YYYY</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="5">
          <spacer name="horizontalSpacer_4">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -63,18 +75,6 @@
            </size>
           </property>
          </spacer>
-        </item>
-        <item row="0" column="5">
-         <widget class="QLabel" name="currDateLabel">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>DD-MMM-YYYY</string>
-          </property>
-         </widget>
         </item>
         <item row="0" column="1">
          <spacer name="horizontalSpacer_2">
@@ -88,6 +88,9 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="0" column="2">
+         <widget class="QSpinBox" name="cameraNumber"/>
         </item>
        </layout>
       </item>
@@ -129,9 +132,9 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_9">
               <item>
-               <widget class="QPushButton" name="getimage">
+               <widget class="QPushButton" name="generate">
                 <property name="text">
-                 <string>getimage</string>
+                 <string>Generate</string>
                 </property>
                </widget>
               </item>

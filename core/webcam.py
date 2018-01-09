@@ -6,8 +6,10 @@ class Webcam:
         self.stream = cv2.VideoCapture(src)
         self.grabbed, self.frame = self.stream.read()
         self.stopped = False
+        self.staus = False
 
     def start(self):
+        self.staus = True
         t = Thread(target=self.update)
         t.daemon = True
         t.start()
@@ -24,4 +26,7 @@ class Webcam:
         return self.frame
 
     def stop(self):
+        self.staus = False
         self.stopped = True
+    def callbackStaus(self):
+        return self.staus

@@ -26,17 +26,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.running = False
         self.binary_toggle = False
-        self.video_stream = Webcam(src=1).start()
-
+        
+        self.video_stream = None
         self.timers = list()
         self.VidFrameGUI = self.VidFrame
         self.VidFrame = VideoWidget(self.VidFrame)
+        
 
         self.startButton.clicked.connect(self.start_clicked)
         self.showBinaryButton.clicked.connect(self.binary_clicked)
-        self.getimage.clicked.connect(self.catchimage)
+        self.generate.clicked.connect(self.generatearray)
         
-
+        #self.generteMatrix =0
 
         self.setup_timers()
         self.startButton.setFocus()
@@ -58,6 +59,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.timers.append(timer2)
 
     def start_clicked(self):
+        self.video_stream = Webcam(src=self.cameraNumber.value()).start()
         self.running = not self.running
         if self.running:
             self.startButton.setText('Stop Video')
@@ -126,6 +128,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         #np.linalg.inv
         X = np.linalg.inv(np.dot( Aplane.transpose(), Aplane))*np.dot( Aplane.transpose(), yplane)
         self.xtranslate = X
+        #self.outputGenerte(X)  
+        #TODO: not yet to convert to txt to read
         print(X)
         
     def checkpoint(self):
@@ -160,9 +164,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def closeEvent(self, event):
         self.running = False
         self.clear_timers()
-        self.video_stream.stop()
+        if self.video_stream != None:
+            self.video_stream.stop()
         self.close()
         sys.exit()
+        
     
     """TODO build catch image"""
     def catchimage(self):
@@ -204,7 +210,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             cv2.line(frame1, pts[i - 1], pts[i], (0, 0, 255), thickness)
 
 
-    
+    def outputGenerte(self, matrix):
+        filename, _ = QFileDialog.getSaveFileName(self, "Save File", "./test.txt", "Text files (*.txt)")
+        listdata = matrix.tolist()
+        if filename:
+            data = []
+            data1 = []
+            data2 = []
+            for e in range(0, 3):
+                data.append(str(listdata[0][e]))
+                data1.append(str(listdata[1][e]))
+                data2.append(str(listdata[2][e]))
+            print(data2)
+            with open(filename, 'w') as f:
+                f.write(str(data+'\n'))
+                f.write(str(data1+'\n'))
+                f.write(str(data2+'\n'))
+
+        
     @pyqtSlot()
     def on_load_clicked(self):
         filename, _ = QFileDialog.getOpenFileName(self, "Open File", ".", "Text files (*.txt)")
