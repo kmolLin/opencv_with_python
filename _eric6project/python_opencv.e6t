@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Tasks SYSTEM "Tasks-6.0.dtd">
 <!-- eric6 tasks file for project python_opencv -->
-<!-- Saved: 2018-01-09, 15:29:29 -->
+<!-- Saved: 2018-01-18, 20:31:02 -->
 <Tasks version="6.0">
   <ProjectScanFilter></ProjectScanFilter>
-  <Task priority="1" completed="False" type="1" uid="{920482de-26a4-4624-9e81-cd5138be415f}">
+  <Task priority="1" completed="False" type="1" uid="{a96d065b-8b5d-4940-bf3c-46049e980dab}">
     <Summary>TODO: not yet to convert to txt to read</Summary>
     <Description></Description>
-    <Created>2018-01-09, 15:29:26</Created>
+    <Created>2018-01-18, 20:30:59</Created>
     <Resource>
       <Filename>core/mainwindow.py</Filename>
-      <Linenumber>132</Linenumber>
+      <Linenumber>156</Linenumber>
     </Resource>
   </Task>
 </Tasks>

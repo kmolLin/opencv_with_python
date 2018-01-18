@@ -19,6 +19,14 @@ greenLower = (100, 43, 46)
 greenUpper = (124, 255, 255)
 pts = deque(maxlen=64)
 
+mtx  = np.array(([752.45869904, 0.00000000e+00, 305.30744105], 
+                      [0.00000000e+00, 752.01164493, 240.37222481],
+                     [0.00000000e+00, 0.00000000e+00, 1.00000000e+00] ))
+
+dist = np.array(([ 0.01570305, -0.12139823 , -0.00088208 , -0.00048403, -0.21124608]))
+  
+
+
 class MainWindow(QMainWindow, Ui_MainWindow):
 
     def __init__(self, parent=None):
@@ -75,11 +83,27 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if not self.binary_toggle:
             self.showBinaryButton.setText('Show Binary')
 
+    def testcode(self, frame1):
+        
+        h,  w = frame1.shape[:2]
+        newcameramtx, roi=cv2.getOptimalNewCameraMatrix(mtx,dist,(w,h),1,(w,h))
+        
+        #dst = cv2.undistort(frame, mtx, dist, None, newcameramtx)  method 1
+        
+        mapx,mapy = cv2.initUndistortRectifyMap(mtx,dist,None,newcameramtx,(w,h),5)
+        dst = cv2.remap(frame1,mapx,mapy,cv2.INTER_LINEAR)
+        x,y,w,h = roi
+        dst = dst[y:y+h, x:x+w]
+        return dst
+
     def update_frame(self):
         if self.running:
             frame = self.video_stream.read()
+            
             if self.binary_toggle:
                 #(grabbed, frame) = self.video_stream.read()
+                frame = self.testcode(frame)
+                
                 self.trackObject(frame)
 
                 #frame = self.clean_img(frame)
