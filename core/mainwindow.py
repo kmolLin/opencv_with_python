@@ -107,6 +107,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.trackObject(frame)
 
                 #frame = self.clean_img(frame)
+
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             frame_height, frame_width, _ = frame.shape
             frame = QImage(frame.data,
@@ -293,3 +294,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     @pyqtSlot()
     def on_getpixel_clicked(self):
         self.checkpoint()
+    
+    @pyqtSlot()
+    def on_saveImage_clicked(self):
+        filename, _ = QFileDialog.getSaveFileName(self, "Save File", ".calibation_data/data.jpg", "Text files (*.jpg)")
+        if filename:
+            camera_capture = self.video_stream.saveimage()
+            cv2.imwrite(filename, camera_capture)
+        
+    @pyqtSlot()
+    def on_actioncalibation_changed(self):
+        """
+        Slot documentation goes here.
+        """
+        # TODO: not implemented yet
+        raise NotImplementedError

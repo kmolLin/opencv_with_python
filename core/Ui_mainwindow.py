@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Y:\eric6_workspace\opencv_with_python\core\mainwindow.ui'
+# Form implementation generated from reading ui file 'D:\opencv_with_python\core\mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.7
+# Created by: PyQt5 UI code generator 5.9
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1029, 620)
+        MainWindow.resize(999, 507)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout_11 = QtWidgets.QHBoxLayout(self.centralwidget)
@@ -26,27 +26,30 @@ class Ui_MainWindow(object):
         self.currTimeLabel.setFont(font)
         self.currTimeLabel.setObjectName("currTimeLabel")
         self.gridLayout.addWidget(self.currTimeLabel, 0, 0, 1, 1)
+        self.showBinaryButton = QtWidgets.QPushButton(self.centralwidget)
+        self.showBinaryButton.setObjectName("showBinaryButton")
+        self.gridLayout.addWidget(self.showBinaryButton, 0, 4, 1, 1)
         self.startButton = QtWidgets.QPushButton(self.centralwidget)
         self.startButton.setAutoDefault(False)
         self.startButton.setDefault(False)
         self.startButton.setObjectName("startButton")
         self.gridLayout.addWidget(self.startButton, 0, 3, 1, 1)
-        self.showBinaryButton = QtWidgets.QPushButton(self.centralwidget)
-        self.showBinaryButton.setObjectName("showBinaryButton")
-        self.gridLayout.addWidget(self.showBinaryButton, 0, 4, 1, 1)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem, 0, 6, 1, 1)
+        spacerItem1 = QtWidgets.QSpacerItem(24, 17, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem1, 0, 1, 1, 1)
         self.currDateLabel = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(16)
         self.currDateLabel.setFont(font)
         self.currDateLabel.setObjectName("currDateLabel")
-        self.gridLayout.addWidget(self.currDateLabel, 0, 6, 1, 1)
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem, 0, 5, 1, 1)
-        spacerItem1 = QtWidgets.QSpacerItem(24, 17, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem1, 0, 1, 1, 1)
+        self.gridLayout.addWidget(self.currDateLabel, 0, 7, 1, 1)
         self.cameraNumber = QtWidgets.QSpinBox(self.centralwidget)
         self.cameraNumber.setObjectName("cameraNumber")
         self.gridLayout.addWidget(self.cameraNumber, 0, 2, 1, 1)
+        self.saveImage = QtWidgets.QPushButton(self.centralwidget)
+        self.saveImage.setObjectName("saveImage")
+        self.gridLayout.addWidget(self.saveImage, 0, 5, 1, 1)
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
         self.VidFrame = QtWidgets.QWidget(self.centralwidget)
         self.VidFrame.setEnabled(True)
@@ -271,12 +274,18 @@ class Ui_MainWindow(object):
         self.horizontalLayout_11.addLayout(self.verticalLayout_4)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1029, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 999, 21))
         self.menubar.setObjectName("menubar")
+        self.menuCalibation = QtWidgets.QMenu(self.menubar)
+        self.menuCalibation.setObjectName("menuCalibation")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        self.actioncalibation = QtWidgets.QAction(MainWindow)
+        self.actioncalibation.setObjectName("actioncalibation")
+        self.menuCalibation.addAction(self.actioncalibation)
+        self.menubar.addAction(self.menuCalibation.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -285,9 +294,10 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "opencv_pyqt5"))
         self.currTimeLabel.setText(_translate("MainWindow", "HH:MM:SS PM"))
-        self.startButton.setText(_translate("MainWindow", "Start Video"))
         self.showBinaryButton.setText(_translate("MainWindow", "tracking"))
+        self.startButton.setText(_translate("MainWindow", "Start Video"))
         self.currDateLabel.setText(_translate("MainWindow", "DD-MMM-YYYY"))
+        self.saveImage.setText(_translate("MainWindow", "SaveImage"))
         self.generate.setText(_translate("MainWindow", "Generate"))
         self.load.setText(_translate("MainWindow", "Load"))
         self.output.setText(_translate("MainWindow", "output"))
@@ -303,6 +313,8 @@ class Ui_MainWindow(object):
         self.label_10.setText(_translate("MainWindow", "Point 4"))
         self.label_11.setText(_translate("MainWindow", "input pixel"))
         self.getpixel.setText(_translate("MainWindow", "getpixel"))
+        self.menuCalibation.setTitle(_translate("MainWindow", "Setting"))
+        self.actioncalibation.setText(_translate("MainWindow", "calibation"))
 
 
 if __name__ == "__main__":

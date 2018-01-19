@@ -24,8 +24,13 @@ class Webcam:
 
     def read(self):
         return self.frame
+        
+    def saveimage(self):
+        a= self.frame
+        return a
 
     def stop(self):
+        self.stream.release()
         self.staus = False
         self.stopped = True
     def callbackStaus(self):

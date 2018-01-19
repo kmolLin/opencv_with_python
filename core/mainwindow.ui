@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1029</width>
-    <height>620</height>
+    <width>999</width>
+    <height>507</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,6 +31,13 @@
           </property>
          </widget>
         </item>
+        <item row="0" column="4">
+         <widget class="QPushButton" name="showBinaryButton">
+          <property name="text">
+           <string>tracking</string>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="3">
          <widget class="QPushButton" name="startButton">
           <property name="text">
@@ -44,26 +51,7 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="4">
-         <widget class="QPushButton" name="showBinaryButton">
-          <property name="text">
-           <string>tracking</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="6">
-         <widget class="QLabel" name="currDateLabel">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>DD-MMM-YYYY</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="5">
          <spacer name="horizontalSpacer_4">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -89,8 +77,27 @@
           </property>
          </spacer>
         </item>
+        <item row="0" column="7">
+         <widget class="QLabel" name="currDateLabel">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>DD-MMM-YYYY</string>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="2">
          <widget class="QSpinBox" name="cameraNumber"/>
+        </item>
+        <item row="0" column="5">
+         <widget class="QPushButton" name="saveImage">
+          <property name="text">
+           <string>SaveImage</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -573,12 +580,24 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1029</width>
+     <width>999</width>
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuCalibation">
+    <property name="title">
+     <string>Setting</string>
+    </property>
+    <addaction name="actioncalibation"/>
+   </widget>
+   <addaction name="menuCalibation"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actioncalibation">
+   <property name="text">
+    <string>calibation</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
