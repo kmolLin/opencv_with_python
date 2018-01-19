@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Tasks SYSTEM "Tasks-6.0.dtd">
 <!-- eric6 tasks file for project python_opencv -->
-<!-- Saved: 2018-01-19, 17:28:25 -->
+<!-- Saved: 2018-01-19, 17:38:14 -->
 <Tasks version="6.0">
   <ProjectScanFilter></ProjectScanFilter>
   <Task priority="1" completed="False" type="1" uid="{b841b37c-0fab-4c6e-b82b-24bc98bb3da1}">
