@@ -8,6 +8,8 @@ from collections import deque
 from .webcam import Webcam
 from .VideoWidget import VideoWidget
 
+from .calibation import Dialog
+
 import numpy as np
 import datetime
 import cv2
@@ -82,6 +84,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.showBinaryButton.setText('Show Color')
         if not self.binary_toggle:
             self.showBinaryButton.setText('Show Binary')
+            
+            
+    # TODO: add method to calibation
+    def __openDlg__(self):
+        dlg2 = Dialog()
+        dlg2.show()
+        if dlg2.exec_(): pass
 
     def testcode(self, frame1):
         
@@ -297,15 +306,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     @pyqtSlot()
     def on_saveImage_clicked(self):
+        """
+        dir = QFileDialog.getExistingDirectory(self, "Save File", ".calibation_data/data.jpg", QFileDialog.ShowDirsOnly)
+        print(dir)
+        """
         filename, _ = QFileDialog.getSaveFileName(self, "Save File", ".calibation_data/data.jpg", "Text files (*.jpg)")
         if filename:
             camera_capture = self.video_stream.saveimage()
             cv2.imwrite(filename, camera_capture)
         
+    
     @pyqtSlot()
-    def on_actioncalibation_changed(self):
-        """
-        Slot documentation goes here.
-        """
-        # TODO: not implemented yet
-        raise NotImplementedError
+    def on_actioncalibation_triggered(self):
+        self.__openDlg__()
+        #filename, _ = QFileDialog.getOpenFileUrl(self, "Save File", ".calibation_data/data.jpg", "Text files (*.jpg)")
+        #print(filename)

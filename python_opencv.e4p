@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project python_opencv -->
-<!-- Saved: 2018-01-19, 17:38:13 -->
+<!-- Saved: 2018-01-19, 22:36:52 -->
 <!-- Copyright (C) 2018 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -13,8 +13,11 @@
   <Email></Email>
   <Eol index="0"/>
   <Sources>
+    <Source>core/Ui_calibation.py</Source>
     <Source>core/Ui_mainwindow.py</Source>
     <Source>core/VideoWidget.py</Source>
+    <Source>core/calibation.py</Source>
+    <Source>core/calibration/calibration_calc.py</Source>
     <Source>core/mainwindow.py</Source>
     <Source>core/webcam.py</Source>
     <Source>launch.py</Source>
