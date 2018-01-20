@@ -21,13 +21,22 @@ greenLower = (100, 43, 46)
 greenUpper = (124, 255, 255)
 pts = deque(maxlen=64)
 
+#640*480 pixel
+"""
 mtx  = np.array(([732.50285172, 0.00000000e+00,309.35704871], 
                       [0.00000000e+00,732.30666799, 242.63511951],
                      [0.00000000e+00, 0.00000000e+00, 1.00000000e+00] ))
 
 dist = np.array(([3.78048858e-02, -3.67592030e-01 , -2.47147159e-03  ,-4.17964146e-04,  4.24613110e-01]))
   
+"""
+#800*600 pixel
+mtx  = np.array(([915.87877768, 0.00000000e+00,380.14276358], 
+                      [0.00000000e+00,915.88537288, 314.01035384],
+                     [0.00000000e+00, 0.00000000e+00, 1.00000000e+00] ))
 
+dist = np.array(([0.02764797, -0.33807616 , 0.00095279  ,-0.0024703,  0.57549135]))
+  
 
 class MainWindow(QMainWindow, Ui_MainWindow):
 
@@ -70,6 +79,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def start_clicked(self):
         self.video_stream = Webcam(src=self.cameraNumber.value()).start()
+        
         self.running = not self.running
         if self.running:
             self.startButton.setText('Stop Video')

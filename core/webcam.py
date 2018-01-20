@@ -10,6 +10,8 @@ class Webcam:
 
     def start(self):
         self.staus = True
+        self.stream.set(3, 720)# CV_CAP_PROP_FRAME_WIDTH
+        self.stream.set(4,1280)#CV_CAP_PROP_FRAME_WIDTH
         t = Thread(target=self.update)
         t.daemon = True
         t.start()

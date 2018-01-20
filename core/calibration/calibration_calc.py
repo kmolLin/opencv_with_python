@@ -18,7 +18,7 @@ class calibation:
 
         # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
         self.objp = np.zeros((self.chessw_point*self.chessl_point,3), np.float32)
-        self.objp[:,:2] = np.mgrid[0:self.chessl_point,0:self.chessw_point].T.reshape(-1,2)*self.distance
+        self.objp[:,:2] = np.mgrid[0:self.chessl_point,0:self.chessw_point].T.reshape(-1,2)  #*self.distance
         
         self.objpoints = [] # 3d point in real world space
         self.imgpoints = [] # 2d points in image plane.
@@ -48,7 +48,7 @@ class calibation:
                 cv2.waitKey(500)
                 
         ret, mtx, dist, rvecs, tvecs= cv2.calibrateCamera(self.objpoints, self.imgpoints, gray.shape[::-1],None,None)
-        self.calcerror()
+        self.calcerror( ret, mtx, dist, rvecs, tvecs)
         return ret, mtx, dist, rvecs, tvecs
         
     def Opencv_undistort(self,files, mtx, dist):
@@ -77,12 +77,15 @@ class calibation:
         #if filename:
         cv2.imwrite("./test2.jpg", dst)
                 
-    def calcerror(self):
+    def calcerror(self, ret, mtx, dist, rvecs, tvecs):
         tot_error = 0  
         for i in range(len(self.objpoints)):  
-            img_points2, _ = cv2.projectPoints(self.objpoints[i],self.rvecs[i],self.tvecs[i],self.mtx,self.dist)  
+            img_points2, _ = cv2.projectPoints(self.objpoints[i],rvecs[i],tvecs[i],mtx,dist)  
             error = cv2.norm(self.imgpoints[i],img_points2, cv2.NORM_L2)/len(img_points2)  
             tot_error += error  
         mean_error = tot_error/len(self.objpoints)  
         print ("total error: ", tot_error )
         print ("mean error: ", mean_error) 
+        
+
+        

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'D:\opencv_with_python\core\mainwindow.ui'
+# Form implementation generated from reading ui file 'Y:\eric6_workspace\opencv_with_python\core\mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(999, 507)
+        MainWindow.resize(985, 674)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout_11 = QtWidgets.QHBoxLayout(self.centralwidget)
@@ -274,7 +274,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_11.addLayout(self.verticalLayout_4)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 999, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 985, 21))
         self.menubar.setObjectName("menubar")
         self.menuCalibation = QtWidgets.QMenu(self.menubar)
         self.menuCalibation.setObjectName("menuCalibation")
