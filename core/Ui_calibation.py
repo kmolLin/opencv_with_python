@@ -64,6 +64,9 @@ class Ui_Dialog(object):
         self.initundistort = QtWidgets.QPushButton(Dialog)
         self.initundistort.setObjectName("initundistort")
         self.horizontalLayout_5.addWidget(self.initundistort)
+        self.exportmatrix = QtWidgets.QPushButton(Dialog)
+        self.exportmatrix.setObjectName("exportmatrix")
+        self.horizontalLayout_5.addWidget(self.exportmatrix)
         self.verticalLayout.addLayout(self.horizontalLayout_5)
         self.horizontalLayout_6.addLayout(self.verticalLayout)
 
@@ -80,6 +83,7 @@ class Ui_Dialog(object):
         self.calibation.setText(_translate("Dialog", "Calibation"))
         self.undistort.setText(_translate("Dialog", "undistort"))
         self.initundistort.setText(_translate("Dialog", "initundistort"))
+        self.exportmatrix.setText(_translate("Dialog", "Output Matrix"))
 
 
 if __name__ == "__main__":

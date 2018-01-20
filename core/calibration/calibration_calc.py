@@ -57,7 +57,6 @@ class calibation:
         dst = cv2.undistort(img, mtx, dist, None, newcameramtx)
         x,y,w,h = roi
         dst = dst[y:y+h, x:x+w]
-        print(type(dst))
         filename, _ = QFileDialog.getSaveFileName(self, "Save File", ".calibation_data/data.jpg", "Text files (*.jpg)")
         if filename:
             cv2.imwrite(filename, dst)

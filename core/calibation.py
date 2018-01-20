@@ -27,32 +27,35 @@ class Dialog(QDialog, Ui_Dialog):
         self.locate = self.imagePath.text()
         print(self.locate)
         
-        self.call = calibation(self.w, self.l , self.distance)
-        ret, mtx, dist, rvecs, tvecs = self.call.calcmatrix(self.locate)
-        print(ret, mtx, dist, rvecs, tvecs)
+        self.calb = calibation(self.w, self.l , self.distance)
+        self.ret, self.mtx, self.dist, self.rvecs, self.tvecs = self.calb.calcmatrix(self.locate)
+        print(self.ret, self.mtx, self.dist)
         # TODO: need to calc
         
-    
-    @pyqtSlot()
-    def on_pushButton_clicked(self):
-        """
-        Slot documentation goes here.
-        """
-        # TODO: not implemented yet
-        raise NotImplementedError
-    
     @pyqtSlot()
     def on_undistort_clicked(self):
-        """
-        Slot documentation goes here.
-        """
-        # TODO: not implemented yet
-        raise NotImplementedError
+        filename, _ = QFileDialog.getSaveFileName(self, "Save File", ".calibation_data/data.jpg", "Text files (*.jpg)")
+        if filename:
+            self.calb.Opencv_undistort(self, filename, self.mtx, self.dist)
+    
+    @pyqtSlot()
+    def on_initundistort_clicked(self):
+        filename, _ = QFileDialog.getSaveFileName(self, "Save File", ".calibation_data/data.jpg", "Text files (*.jpg)")
+        if filename:
+            self.calb.Opencv_initdis(self, filename, self.mtx, self.dist)
     
     @pyqtSlot()
     def on_imagePbtn_clicked(self):
         dir = QFileDialog.getExistingDirectory(self, "Save File", ".calibation_data/data.jpg", QFileDialog.ShowDirsOnly)
         if dir:
-            print(dir)
             self.imagePath.insert(dir)
-        
+    
+    @pyqtSlot()
+    def on_exportmatrix_clicked(self):
+        filename, _ = QFileDialog.getSaveFileName(self, "Save File", "./test.txt", "Text files (*.txt)")
+        if filename:
+            data = []
+            data.append(self.mtx)
+            data.append(self.dist)
+            with open(filename, 'w') as f:
+                f.write(str(data))
