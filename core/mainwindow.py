@@ -21,11 +21,11 @@ greenLower = (100, 43, 46)
 greenUpper = (124, 255, 255)
 pts = deque(maxlen=64)
 
-mtx  = np.array(([752.45869904, 0.00000000e+00, 305.30744105], 
-                      [0.00000000e+00, 752.01164493, 240.37222481],
+mtx  = np.array(([732.50285172, 0.00000000e+00,309.35704871], 
+                      [0.00000000e+00,732.30666799, 242.63511951],
                      [0.00000000e+00, 0.00000000e+00, 1.00000000e+00] ))
 
-dist = np.array(([ 0.01570305, -0.12139823 , -0.00088208 , -0.00048403, -0.21124608]))
+dist = np.array(([3.78048858e-02, -3.67592030e-01 , -2.47147159e-03  ,-4.17964146e-04,  4.24613110e-01]))
   
 
 
@@ -116,7 +116,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.trackObject(frame)
 
                 #frame = self.clean_img(frame)
-
+            
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             frame_height, frame_width, _ = frame.shape
             frame = QImage(frame.data,

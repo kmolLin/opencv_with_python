@@ -34,15 +34,15 @@ class Dialog(QDialog, Ui_Dialog):
         
     @pyqtSlot()
     def on_undistort_clicked(self):
-        filename, _ = QFileDialog.getSaveFileName(self, "Save File", ".calibation_data/data.jpg", "Text files (*.jpg)")
+        filename, _ = QFileDialog.getOpenFileName(self, "Save File", ".calibation_data/data.jpg", "Text files (*.jpg)")
         if filename:
-            self.calb.Opencv_undistort(self, filename, self.mtx, self.dist)
+            self.calb.Opencv_undistort(filename, self.mtx, self.dist)
     
     @pyqtSlot()
     def on_initundistort_clicked(self):
-        filename, _ = QFileDialog.getSaveFileName(self, "Save File", ".calibation_data/data.jpg", "Text files (*.jpg)")
+        filename, _ = QFileDialog.getOpenFileName(self, "Save File", ".calibation_data/data.jpg", "Text files (*.jpg)")
         if filename:
-            self.calb.Opencv_initdis(self, filename, self.mtx, self.dist)
+            self.calb.Opencv_initdis(filename, self.mtx, self.dist)
     
     @pyqtSlot()
     def on_imagePbtn_clicked(self):

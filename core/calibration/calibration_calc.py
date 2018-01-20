@@ -48,6 +48,7 @@ class calibation:
                 cv2.waitKey(500)
                 
         ret, mtx, dist, rvecs, tvecs= cv2.calibrateCamera(self.objpoints, self.imgpoints, gray.shape[::-1],None,None)
+        self.calcerror()
         return ret, mtx, dist, rvecs, tvecs
         
     def Opencv_undistort(self,files, mtx, dist):
@@ -57,9 +58,9 @@ class calibation:
         dst = cv2.undistort(img, mtx, dist, None, newcameramtx)
         x,y,w,h = roi
         dst = dst[y:y+h, x:x+w]
-        filename, _ = QFileDialog.getSaveFileName(self, "Save File", ".calibation_data/data.jpg", "Text files (*.jpg)")
-        if filename:
-            cv2.imwrite(filename, dst)
+        #filename, _ = QFileDialog.getSaveFileName("Save File", "./test.jpg", "Text files (*.jpg)")
+        #if filename:
+        cv2.imwrite("./test.jpg", dst)
             
     def Opencv_initdis(self,files, mtx, dist):
         
@@ -72,7 +73,16 @@ class calibation:
         # crop the image
         x,y,w,h = roi
         dst = dst[y:y+h, x:x+w]
-        filename, _ = QFileDialog.getSaveFileName(self, "Save File", ".calibation_data/data.jpg", "Text files (*.jpg)")
-        if filename:
-            cv2.imwrite(filename, dst)
+        #filename, _ = QFileDialog.getSaveFileName("Save File", "./test.jpg", "Text files (*.jpg)")
+        #if filename:
+        cv2.imwrite("./test2.jpg", dst)
                 
+    def calcerror(self):
+        tot_error = 0  
+        for i in range(len(self.objpoints)):  
+            img_points2, _ = cv2.projectPoints(self.objpoints[i],self.rvecs[i],self.tvecs[i],self.mtx,self.dist)  
+            error = cv2.norm(self.imgpoints[i],img_points2, cv2.NORM_L2)/len(img_points2)  
+            tot_error += error  
+        mean_error = tot_error/len(self.objpoints)  
+        print ("total error: ", tot_error )
+        print ("mean error: ", mean_error) 
