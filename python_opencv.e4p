@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project python_opencv -->
-<!-- Saved: 2018-01-19, 22:36:52 -->
+<!-- Saved: 2018-01-20, 22:52:40 -->
 <!-- Copyright (C) 2018 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -21,6 +21,7 @@
     <Source>core/mainwindow.py</Source>
     <Source>core/webcam.py</Source>
     <Source>launch.py</Source>
+    <Source>testcode/tttt.py</Source>
     <Source>testcodeandimage/test1code.py</Source>
     <Source>testcodeandimage/test2.py</Source>
   </Sources>
