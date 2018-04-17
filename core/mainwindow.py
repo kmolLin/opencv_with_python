@@ -35,6 +35,7 @@ mtx  = np.array(([915.87877768, 0.00000000e+00,380.14276358],
                       [0.00000000e+00,915.88537288, 314.01035384],
                      [0.00000000e+00, 0.00000000e+00, 1.00000000e+00] ))
 
+
 dist = np.array(([0.02764797, -0.33807616 , 0.00095279  ,-0.0024703,  0.57549135]))
   
 
@@ -102,11 +103,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         dlg2.show()
         if dlg2.exec_(): pass
 
-    def testcode(self, frame1):
+    def InConvertImage(self, frame1):
+        # the convert will convert inner matrix to the frame.
         
         h,  w = frame1.shape[:2]
         newcameramtx, roi=cv2.getOptimalNewCameraMatrix(mtx,dist,(w,h),1,(w,h))
-        
+        # this is second method in the conver Image.
         #dst = cv2.undistort(frame, mtx, dist, None, newcameramtx)  method 1
         
         mapx,mapy = cv2.initUndistortRectifyMap(mtx,dist,None,newcameramtx,(w,h),5)
@@ -121,7 +123,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             
             if self.binary_toggle:
                 #(grabbed, frame) = self.video_stream.read()
-                frame = self.testcode(frame)
+                frame = self.InConvertImage(frame)
                 
                 self.trackObject(frame)
 
@@ -146,35 +148,32 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         return clean
         
     def loadimage(self, name='buffer.png'):
-        #image = cv2.imread(name, flags=cv2.IMREAD_COLOR)
-        #cv2.namedWindow('image',cv2.WINDOW_AUTOSIZE) 
-        #self.calctrackobject(image)
-        
         self.generatearray()
         
-        
-        
-        #cv2.imshow('image',image) 
-        #cv2.waitKey(0) 
-        #cv2.destroyAllWindows()
     
     def generatearray(self):
         
-        yplane = np.mat([[self.gp1x.value(),self.gp1y.value(), 1 ], 
-                                  [self.gp2x.value(),self.gp2y.value(), 1 ], 
-                                  [self.gp3x.value(),self.gp3y.value(), 1 ], 
-                                  [self.gp4x.value(),self.gp4y.value(), 1 ]])
+        world = np.mat([[self.gp1x.value(),self.gp1y.value(), 1, 1 ], 
+                                  [self.gp2x.value(),self.gp2y.value(), 1, 1 ], 
+                                  [self.gp3x.value(),self.gp3y.value(), 1, 1 ], 
+                                  [self.gp4x.value(),self.gp4y.value(), 1, 1 ]])
                                   
-        Aplane = np.mat([[self.pp1x.value(),self.pp1y.value(), 1 ], 
-                                  [self.pp2x.value(),self.pp2y.value(), 1 ], 
-                                  [self.pp3x.value(),self.pp3y.value(), 1 ], 
-                                  [self.pp4x.value(),self.pp4y.value(), 1 ]])
+        pixmat = np.mat([[self.pp1x.value(),self.pp1y.value(), 1, 1 ], 
+                                  [self.pp2x.value(),self.pp2y.value(), 1, 1 ], 
+                                  [self.pp3x.value(),self.pp3y.value(), 1, 1 ], 
+                                  [self.pp4x.value(),self.pp4y.value(), 1, 1 ]])
+        
+        newmtx = np.array(([915.87877768/Zc, 0.00000000e+00, 0,380.14276358], 
+                      [0.00000000e+00,915.88537288/Zc, 0, 314.01035384],
+                     [0.00000000e+00, 0.00000000e+00, 1.0/Zc, 0], 
+                    [0.00000000e+00, 0.00000000e+00, 0, 1.0] ))
         #np.linalg.inv
-        X = np.linalg.inv(np.dot( Aplane.transpose(), Aplane))*np.dot( Aplane.transpose(), yplane)
+        outerMat = np.dot(np.dot(np.linalg.inv(world), np.linalg.inv(newmtx)), pixmat)  
+        #X = np.linalg.inv(np.dot( Aplane.transpose(), Aplane))*np.dot( Aplane.transpose(), yplane)
         self.xtranslate = X
         #self.outputGenerte(X)  
         #TODO: not yet to convert to txt to read
-        print(X)
+
         
     def checkpoint(self):
         pixelx, pixely = self.inputpixelX.value(), self.inputpixelY.value()
@@ -222,8 +221,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         cv2.imwrite(file, camera_capture)
         self.loadimage()
         
-        
-        
     def trackObject(self, frame1):
         hsv = cv2.cvtColor(frame1, cv2.COLOR_BGR2HSV)
         mask = cv2.inRange(hsv, greenLower, greenUpper)
@@ -239,14 +236,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             ((x, y), radius) = cv2.minEnclosingCircle(c)
             M = cv2.moments(c)
             center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
-            print("{}\t{}".format(center[0],center[1] ))
+            #print("{}\t{}".format(center[0],center[1] ))
+            self.trackX.setText(str(center[0]))
+            self.trackY.setText(str(center[1]))
             if radius > 10:
                 cv2.circle(frame1, (int(x), int(y)), int(radius),
                 (0, 255, 255), 2)
             cv2.circle(frame1, center, 5, (0, 0, 255), -1)
             
         pts.appendleft(center)
-        #print(pts)
         for i in range(1, len(pts)):
             if pts[i - 1] is None or pts[i] is None:
                 continue
