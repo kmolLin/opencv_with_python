@@ -523,7 +523,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QDoubleSpinBox" name="zc">
+         <widget class="QDoubleSpinBox" name="Zc">
           <property name="decimals">
            <number>4</number>
           </property>
@@ -633,7 +633,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QDoubleSpinBox" name="inputpixelX_2">
+         <widget class="QDoubleSpinBox" name="inputpixelZ">
           <property name="decimals">
            <number>4</number>
           </property>

@@ -153,31 +153,42 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def generatearray(self):
         
-        world = np.mat([[self.gp1x.value(),self.gp1y.value(), 1, 1 ], 
-                                  [self.gp2x.value(),self.gp2y.value(), 1, 1 ], 
-                                  [self.gp3x.value(),self.gp3y.value(), 1, 1 ], 
-                                  [self.gp4x.value(),self.gp4y.value(), 1, 1 ]])
-                                  
-        pixmat = np.mat([[self.pp1x.value(),self.pp1y.value(), 1, 1 ], 
-                                  [self.pp2x.value(),self.pp2y.value(), 1, 1 ], 
-                                  [self.pp3x.value(),self.pp3y.value(), 1, 1 ], 
-                                  [self.pp4x.value(),self.pp4y.value(), 1, 1 ]])
+        #1030mm
+        Zc = 1240 #self.Zc.value()
+        Zw = 1030
         
-        newmtx = np.array(([915.87877768/Zc, 0.00000000e+00, 0,380.14276358], 
-                      [0.00000000e+00,915.88537288/Zc, 0, 314.01035384],
-                     [0.00000000e+00, 0.00000000e+00, 1.0/Zc, 0], 
-                    [0.00000000e+00, 0.00000000e+00, 0, 1.0] ))
-        #np.linalg.inv
-        outerMat = np.dot(np.dot(np.linalg.inv(world), np.linalg.inv(newmtx)), pixmat)  
-        #X = np.linalg.inv(np.dot( Aplane.transpose(), Aplane))*np.dot( Aplane.transpose(), yplane)
-        self.xtranslate = X
-        #self.outputGenerte(X)  
-        #TODO: not yet to convert to txt to read
+        world = np.array( 
+        [[[self.gp1x.value()],[self.gp1y.value()],[1]],
+        [[self.gp2x.value()],[self.gp2y.value() ],[1]],
+        [[self.gp3x.value()],[self.gp3y.value()],[1]],
+        [[self.gp4x.value()],[self.gp4y.value()],[1]]])
+        
+        
+        pixmat = np.array(
+        [[[self.pp1x.value()],[self.pp1y.value()]],
+       [[self.pp2x.value()],[self.pp2y.value()]],
+       [[self.pp3x.value()],[self.pp3y.value()]],
+       [[self.pp4x.value()],[self.pp4y.value()]]])
 
         
+        ret ,  rvec, tevc = cv2.solvePnP(world, pixmat, mtx, dist)
+        scriz = np.array([[0,0,0,1]])
+        rotation, b = cv2.Rodrigues(rvec)
+        tramat = np.c_[rotation,tevc]
+        tramat = np.r_[tramat, scriz]
+        print(tramat)
+        self.xtranslate = tramat
+    #
+    
     def checkpoint(self):
-        pixelx, pixely = self.inputpixelX.value(), self.inputpixelY.value()
-        endpoint =  [pixelx, pixely, 1]*self.xtranslate
+        Zc = 1240
+        newmtx1 = np.array(([915.87877768/Zc, 0.00000000e+00 , 0, 380.14276358], 
+                                    [0.00000000e+00, 915.88537288/Zc, 0, 314.01035384],
+                                    [0.00000000e+00, 0.00000000e+00, 1.0/Zc, 0], 
+                                    [0.00000000e+00, 0.00000000e+00,0 ,1.0]))
+        check = np.array([self.inputpixelX.value(), self.inputpixelY.value(), 1, 1])
+        print(check.T)
+        endpoint =  np.dot(np.dot(np.linalg.inv(self.xtranslate),np.linalg.inv(newmtx1)), check.T)
         print(endpoint)
     
     
