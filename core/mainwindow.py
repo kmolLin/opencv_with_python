@@ -28,13 +28,13 @@ mtx  = np.array(([732.50285172, 0.00000000e+00,309.35704871],
                      [0.00000000e+00, 0.00000000e+00, 1.00000000e+00] ))
 
 dist = np.array(([3.78048858e-02, -3.67592030e-01 , -2.47147159e-03  ,-4.17964146e-04,  4.24613110e-01]))
-  
+
 """
 #800*600 pixel
 mtx  = np.array(([915.87877768, 0.00000000e+00,380.14276358], 
                       [0.00000000e+00,915.88537288, 314.01035384],
                      [0.00000000e+00, 0.00000000e+00, 1.00000000e+00] ))
-
+                        
 
 dist = np.array(([0.02764797, -0.33807616 , 0.00095279  ,-0.0024703,  0.57549135]))
   
@@ -65,6 +65,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def update_time(self):
         self.currTimeLabel.setText(datetime.datetime.now().strftime('%I:%M:%S %p'))
         self.currDateLabel.setText(datetime.datetime.now().strftime('%d-%b-%Y'))
+        
 
     def setup_timers(self):
         timer1 = QTimer(self)
@@ -154,14 +155,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def generatearray(self):
         
         #1030mm
-        Zc = 1240 #self.Zc.value()
+        Zc = 112 #self.Zc.value()
         Zw = 1030
         
         world = np.array( 
-        [[[self.gp1x.value()],[self.gp1y.value()],[1]],
-        [[self.gp2x.value()],[self.gp2y.value() ],[1]],
-        [[self.gp3x.value()],[self.gp3y.value()],[1]],
-        [[self.gp4x.value()],[self.gp4y.value()],[1]]])
+        [[[self.gp1x.value()],[self.gp1y.value()],[Zc]],
+        [[self.gp2x.value()],[self.gp2y.value() ],[Zc]],
+        [[self.gp3x.value()],[self.gp3y.value()],[Zc]],
+        [[self.gp4x.value()],[self.gp4y.value()],[Zc]]])
         
         
         pixmat = np.array(
@@ -171,26 +172,37 @@ class MainWindow(QMainWindow, Ui_MainWindow):
        [[self.pp4x.value()],[self.pp4y.value()]]])
 
         
-        ret ,  rvec, tevc = cv2.solvePnP(world, pixmat, mtx, dist)
+        ret ,  rvec, self.tevc = cv2.solvePnP(world, pixmat, mtx, dist)
+        
         scriz = np.array([[0,0,0,1]])
-        rotation, b = cv2.Rodrigues(rvec)
-        tramat = np.c_[rotation,tevc]
-        tramat = np.r_[tramat, scriz]
-        print(tramat)
-        self.xtranslate = tramat
+        self.rotation, b = cv2.Rodrigues(rvec)
+        self.aamat = np.c_[self.rotation,self.tevc]
+        
+        #tramat = np.c_[rotation,tevc]
+        #tramat = np.r_[tramat, scriz]
+        #self.xxx = 
     #
     
     def checkpoint(self):
-        Zc = 1240
-        newmtx1 = np.array(([915.87877768/Zc, 0.00000000e+00 , 0, 380.14276358], 
-                                    [0.00000000e+00, 915.88537288/Zc, 0, 314.01035384],
-                                    [0.00000000e+00, 0.00000000e+00, 1.0/Zc, 0], 
-                                    [0.00000000e+00, 0.00000000e+00,0 ,1.0]))
-        check = np.array([self.inputpixelX.value(), self.inputpixelY.value(), 1, 1])
-        print(check.T)
-        endpoint =  np.dot(np.dot(np.linalg.inv(self.xtranslate),np.linalg.inv(newmtx1)), check.T)
+        Zc = 1238
+        check = np.array([[self.inputpixelX.value()], [self.inputpixelY.value()], [1]])
+
+        endpoint = np.dot(np.linalg.inv(np.dot(mtx, self.rotation)),( Zc*check-np.dot(mtx, self.tevc)))
+        #endpoint = np.dot(np.linalg.inv(self.xtranslate), check.T)
         print(endpoint)
     
+    def testpoint(self):
+        Zc = 1238
+        mmtx  = np.array(([915.87877768, 0.00000000e+00,380.14276358, 0], 
+                      [0.00000000e+00,915.88537288, 314.01035384, 0],
+                     [0.00000000e+00, 0.00000000e+00, 1.00000000e+00, 0], 
+                     [0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 1]))
+        check = np.array([self.inputpixelX.value(), self.inputpixelY.value(), self.inputpixelZ.value(), 1])
+        print(check)
+        endpixel =  np.dot(np.dot(mmtx, self.xtranslate), check.T)/Zc
+        print(self.xtranslate)
+        print("*"*10)
+        print(endpixel)
     
     def calctrackobject(self, image):
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
@@ -321,6 +333,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     @pyqtSlot()
     def on_getpixel_clicked(self):
+        #self.testpoint()
         self.checkpoint()
     
     @pyqtSlot()
