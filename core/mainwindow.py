@@ -16,20 +16,12 @@ import cv2
 import sys
 
 from .Ui_mainwindow import Ui_MainWindow
+from .parseimage import parseImage
 
 greenLower = (100, 43, 46)
 greenUpper = (124, 255, 255)
 pts = deque(maxlen=64)
 
-#640*480 pixel
-"""
-mtx  = np.array(([732.50285172, 0.00000000e+00,309.35704871], 
-                      [0.00000000e+00,732.30666799, 242.63511951],
-                     [0.00000000e+00, 0.00000000e+00, 1.00000000e+00] ))
-
-dist = np.array(([3.78048858e-02, -3.67592030e-01 , -2.47147159e-03  ,-4.17964146e-04,  4.24613110e-01]))
-
-"""
 #800*600 pixel
 mtx  = np.array(([915.87877768, 0.00000000e+00,380.14276358], 
                       [0.00000000e+00,915.88537288, 314.01035384],
@@ -52,7 +44,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.VidFrameGUI = self.VidFrame
         self.VidFrame = VideoWidget(self.VidFrame)
         
-
+        parseImage(self)
         self.startButton.clicked.connect(self.start_clicked)
         self.showBinaryButton.clicked.connect(self.binary_clicked)
         self.generate.clicked.connect(self.generatearray)
@@ -80,8 +72,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.timers.append(timer2)
 
     def start_clicked(self):
+        """ Use the class inherit the opencv named Webcam() and init it to open camera
+        """
         self.video_stream = Webcam(src=self.cameraNumber.value()).start()
-        
         self.running = not self.running
         if self.running:
             self.startButton.setText('Stop Video')
@@ -91,27 +84,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.VidFrame.hide()
 
     def binary_clicked(self):
+        """ clicked and start for tradding object
+        """
         self.binary_toggle = not self.binary_toggle
         if self.binary_toggle:
             self.showBinaryButton.setText('Show Color')
         if not self.binary_toggle:
             self.showBinaryButton.setText('Show Binary')
             
-            
-    # TODO: add method to calibation
     def __openDlg__(self):
         dlg2 = Dialog()
         dlg2.show()
         if dlg2.exec_(): pass
 
     def InConvertImage(self, frame1):
-        # the convert will convert inner matrix to the frame.
-        
+        """ the convert will convert inner matrix to the frame.
+        """
         h,  w = frame1.shape[:2]
         newcameramtx, roi=cv2.getOptimalNewCameraMatrix(mtx,dist,(w,h),1,(w,h))
         # this is second method in the conver Image.
         #dst = cv2.undistort(frame, mtx, dist, None, newcameramtx)  method 1
-        
         mapx,mapy = cv2.initUndistortRectifyMap(mtx,dist,None,newcameramtx,(w,h),5)
         dst = cv2.remap(frame1,mapx,mapy,cv2.INTER_LINEAR)
         x,y,w,h = roi
@@ -150,11 +142,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
     def loadimage(self, name='buffer.png'):
         self.generatearray()
-        
-    
+
     def generatearray(self):
-        
-        #1030mm
+        """ generate external matrix and 3*1 position offset matrix
+            | r_11  r_21  r_31 |    ||    | Tx |
+            | r_12  r_22  r_32 |    ||    | Ty |
+            | r_13  r_23  r_33 |    ||    | Tz |
+        """
         Zc = 112 #self.Zc.value()
         Zw = 1030
         
@@ -163,34 +157,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         [[self.gp2x.value()],[self.gp2y.value() ],[Zc]],
         [[self.gp3x.value()],[self.gp3y.value()],[Zc]],
         [[self.gp4x.value()],[self.gp4y.value()],[Zc]]])
-        
-        
+
         pixmat = np.array(
         [[[self.pp1x.value()],[self.pp1y.value()]],
        [[self.pp2x.value()],[self.pp2y.value()]],
        [[self.pp3x.value()],[self.pp3y.value()]],
        [[self.pp4x.value()],[self.pp4y.value()]]])
-
-        
         ret ,  rvec, self.tevc = cv2.solvePnP(world, pixmat, mtx, dist)
-        
         scriz = np.array([[0,0,0,1]])
         self.rotation, b = cv2.Rodrigues(rvec)
         self.aamat = np.c_[self.rotation,self.tevc]
-        
-        #tramat = np.c_[rotation,tevc]
-        #tramat = np.r_[tramat, scriz]
-        #self.xxx = 
-    #
     
     def checkpoint(self):
         Zc = 1238
         check = np.array([[self.inputpixelX.value()], [self.inputpixelY.value()], [1]])
-
         endpoint = np.dot(np.linalg.inv(np.dot(mtx, self.rotation)),( Zc*check-np.dot(mtx, self.tevc)))
-        #endpoint = np.dot(np.linalg.inv(self.xtranslate), check.T)
         print(endpoint)
-    
+    """
     def testpoint(self):
         Zc = 1238
         mmtx  = np.array(([915.87877768, 0.00000000e+00,380.14276358, 0], 
@@ -203,16 +186,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         print(self.xtranslate)
         print("*"*10)
         print(endpixel)
-    
+    """
     def calctrackobject(self, image):
+        """tracking max rect object 
+        """
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
         mask = cv2.inRange(hsv, greenLower, greenUpper)
         mask = cv2.erode(mask, None, iterations=2)
         mask = cv2.dilate(mask, None, iterations=2)
         cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
         cv2.CHAIN_APPROX_SIMPLE)[-2]
-        
-        
         center = None
         if len(cnts) > 0:
             c = max(cnts, key=cv2.contourArea)
@@ -234,10 +217,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.video_stream.stop()
         self.close()
         sys.exit()
-        
     
-    """TODO build catch image"""
     def catchimage(self):
+        """ Save capcture image
+        """
         im = self.video_stream.read()
         camera_capture = im
         file = "buffer.png"
@@ -245,11 +228,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.loadimage()
         
     def trackObject(self, frame1):
+        """ tracking object function
+        """
         hsv = cv2.cvtColor(frame1, cv2.COLOR_BGR2HSV)
         mask = cv2.inRange(hsv, greenLower, greenUpper)
         mask = cv2.erode(mask, None, iterations=2)
         mask = cv2.dilate(mask, None, iterations=2)
-        
         cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
         cv2.CHAIN_APPROX_SIMPLE)[-2]
         
@@ -273,9 +257,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 continue
             thickness = int(np.sqrt(64/ float(i + 1)) * 2.5)
             cv2.line(frame1, pts[i - 1], pts[i], (0, 0, 255), thickness)
-
-
+            
     def outputGenerte(self, matrix):
+        """ Save the Generate matrix to .txt
+        """
         filename, _ = QFileDialog.getSaveFileName(self, "Save File", "./test.txt", "Text files (*.txt)")
         listdata = matrix.tolist()
         if filename:
@@ -291,7 +276,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 f.write(str(data+'\n'))
                 f.write(str(data1+'\n'))
                 f.write(str(data2+'\n'))
-
         
     @pyqtSlot()
     def on_load_clicked(self):
@@ -333,6 +317,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     @pyqtSlot()
     def on_getpixel_clicked(self):
+        # for testing code 
         #self.testpoint()
         self.checkpoint()
     
@@ -351,5 +336,4 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     @pyqtSlot()
     def on_actioncalibation_triggered(self):
         self.__openDlg__()
-        #filename, _ = QFileDialog.getOpenFileUrl(self, "Save File", ".calibation_data/data.jpg", "Text files (*.jpg)")
-        #print(filename)
+
