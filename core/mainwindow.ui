@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1077</width>
-    <height>644</height>
+    <width>1203</width>
+    <height>531</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>opencv_pyqt5</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_13">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
@@ -129,528 +129,39 @@
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_4">
+     <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_9">
-              <item>
-               <widget class="QPushButton" name="generate">
-                <property name="text">
-                 <string>Generate</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="load">
-                <property name="text">
-                 <string>Load</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="output">
-                <property name="text">
-                 <string>output</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_5">
-              <property name="text">
-               <string>Global (X,Y)</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout">
-              <item>
-               <widget class="QLabel" name="label">
-                <property name="text">
-                 <string>Point 1</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="gp1x">
-                <property name="decimals">
-                 <number>4</number>
-                </property>
-                <property name="minimum">
-                 <double>-10000.000000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>10000.000000000000000</double>
-                </property>
-                <property name="singleStep">
-                 <double>0.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="gp1y">
-                <property name="decimals">
-                 <number>4</number>
-                </property>
-                <property name="minimum">
-                 <double>-10000.000000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>10000.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_2">
-              <item>
-               <widget class="QLabel" name="label_2">
-                <property name="text">
-                 <string>Point 2</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="gp2x">
-                <property name="decimals">
-                 <number>4</number>
-                </property>
-                <property name="minimum">
-                 <double>-10000.000000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>10000.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="gp2y">
-                <property name="decimals">
-                 <number>4</number>
-                </property>
-                <property name="minimum">
-                 <double>-10000.000000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>10000.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <item>
-               <widget class="QLabel" name="label_3">
-                <property name="text">
-                 <string>Point 3</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="gp3x">
-                <property name="decimals">
-                 <number>4</number>
-                </property>
-                <property name="minimum">
-                 <double>-10000.000000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>10000.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="gp3y">
-                <property name="decimals">
-                 <number>4</number>
-                </property>
-                <property name="minimum">
-                 <double>-10000.000000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>10000.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
-              <item>
-               <widget class="QLabel" name="label_4">
-                <property name="text">
-                 <string>Point 4</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="gp4x">
-                <property name="decimals">
-                 <number>4</number>
-                </property>
-                <property name="minimum">
-                 <double>-10000.000000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>10000.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="gp4y">
-                <property name="decimals">
-                 <number>4</number>
-                </property>
-                <property name="minimum">
-                 <double>-10000.000000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>10000.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>pixel (X,Y)</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
-          <item>
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>Point 1</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDoubleSpinBox" name="pp1x">
-            <property name="decimals">
-             <number>4</number>
-            </property>
-            <property name="minimum">
-             <double>-10000.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>10000.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDoubleSpinBox" name="pp1y">
-            <property name="decimals">
-             <number>4</number>
-            </property>
-            <property name="minimum">
-             <double>-10000.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>10000.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_6">
-          <item>
-           <widget class="QLabel" name="label_8">
-            <property name="text">
-             <string>Point 2</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDoubleSpinBox" name="pp2x">
-            <property name="decimals">
-             <number>4</number>
-            </property>
-            <property name="minimum">
-             <double>-10000.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>10000.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDoubleSpinBox" name="pp2y">
-            <property name="decimals">
-             <number>4</number>
-            </property>
-            <property name="minimum">
-             <double>-10000.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>10000.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_7">
-          <item>
-           <widget class="QLabel" name="label_9">
-            <property name="text">
-             <string>Point 3</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDoubleSpinBox" name="pp3x">
-            <property name="decimals">
-             <number>4</number>
-            </property>
-            <property name="minimum">
-             <double>-10000.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>10000.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDoubleSpinBox" name="pp3y">
-            <property name="decimals">
-             <number>4</number>
-            </property>
-            <property name="minimum">
-             <double>-10000.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>10000.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_8">
-          <item>
-           <widget class="QLabel" name="label_10">
-            <property name="text">
-             <string>Point 4</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDoubleSpinBox" name="pp4x">
-            <property name="decimals">
-             <number>4</number>
-            </property>
-            <property name="minimum">
-             <double>-10000.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>10000.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDoubleSpinBox" name="pp4y">
-            <property name="decimals">
-             <number>4</number>
-            </property>
-            <property name="minimum">
-             <double>-10000.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>10000.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
+       <widget class="QListView" name="listView"/>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_12">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QLabel" name="label_14">
-          <property name="text">
-           <string>Zc:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="add_list_view">
+            <property name="text">
+             <string>Add</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="insert_list_view">
+            <property name="text">
+             <string>Insert</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="delete_list_view">
+            <property name="text">
+             <string>Delete</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QDoubleSpinBox" name="Zc">
-          <property name="decimals">
-           <number>4</number>
-          </property>
-          <property name="minimum">
-           <double>-10000.000000000000000</double>
-          </property>
-          <property name="maximum">
-           <double>10000.000000000000000</double>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_11">
-        <item>
-         <widget class="QLabel" name="label_12">
-          <property name="text">
-           <string>X:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="trackX">
-          <property name="text">
-           <string/>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_13">
-          <property name="text">
-           <string>Y:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="trackY">
-          <property name="text">
-           <string/>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_10">
-        <item>
-         <widget class="QLabel" name="label_11">
-          <property name="text">
-           <string>input pixel</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QDoubleSpinBox" name="inputpixelX">
-          <property name="decimals">
-           <number>4</number>
-          </property>
-          <property name="minimum">
-           <double>-10000.000000000000000</double>
-          </property>
-          <property name="maximum">
-           <double>10000.000000000000000</double>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QDoubleSpinBox" name="inputpixelY">
-          <property name="decimals">
-           <number>4</number>
-          </property>
-          <property name="minimum">
-           <double>-10000.000000000000000</double>
-          </property>
-          <property name="maximum">
-           <double>10000.000000000000000</double>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QDoubleSpinBox" name="inputpixelZ">
-          <property name="decimals">
-           <number>4</number>
-          </property>
-          <property name="minimum">
-           <double>-10000.000000000000000</double>
-          </property>
-          <property name="maximum">
-           <double>10000.000000000000000</double>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="getpixel">
-          <property name="text">
-           <string>getpixel</string>
-          </property>
-         </widget>
+         <widget class="QComboBox" name="image_box"/>
         </item>
        </layout>
       </item>
@@ -658,14 +169,15 @@
     </item>
    </layout>
    <zorder></zorder>
+   <zorder>verticalLayoutWidget</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1077</width>
-     <height>21</height>
+     <width>1203</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuCalibation">
