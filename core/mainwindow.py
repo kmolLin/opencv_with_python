@@ -114,7 +114,26 @@ class MainWindow(QMainWindow):
 
         name = self.image_box.currentText()
         self.model.setData(index, f"{name}")
-        # self.model.setData(0)
+
+    @pyqtSlot()
+    def on_load_image_btn_clicked(self):
+        # choose a image from dlg
+        self.VidFrame.show()
+        file_url, _ = QFileDialog.getOpenFileName(self, 'choose image', ".", "*.png *.jpg")
+        if not file_url:
+            return
+
+        image = cv2.imread(file_url)
+        frame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        frame = self.resizeimage(frame, 4)
+        frame_height, frame_width, _ = frame.shape
+        frame = QImage(frame.data,
+                       frame_width,
+                       frame_height,
+                       frame.strides[0],
+                       QImage.Format_RGB888)
+
+        self.VidFrame.setImage(frame)
 
 
     @pyqtSlot()
@@ -123,7 +142,21 @@ class MainWindow(QMainWindow):
 
     @pyqtSlot()
     def on_delete_list_view_clicked(self):
-        print("456")
+        row = self.listView.currentIndex().row()
+        self.model.removeRows(row, 1)
+
+    # TODO: this two function for move up or down the model list  4/14
+    @pyqtSlot()
+    def on_move_up_btn_clicked(self):
+        row = self.listView.currentIndex().row()
+        index = self.model.index(row)
+        index2 = self.model.index(row - 1)
+
+    @ pyqtSlot()
+    def on_move_down_btn_clicked(self):
+        row = self.listView.currentIndex().row()
+        index = self.model.index(row)
+        pass
 
     # def InConvertImage(self, frame1):
     #     """ the convert will convert inner matrix to the frame.
@@ -138,6 +171,11 @@ class MainWindow(QMainWindow):
     #     dst = dst[y:y + h, x:x + w]
     #     return dst
 
+    def resizeimage(self, image, scale):
+        frame_height, frame_width, _ = image.shape
+        reimage = cv2.resize(image, (int(frame_width / scale), int(frame_height / scale)))
+        return reimage
+
     def update_frame(self):
         if self.running:
             frame = self.video_stream.read()
@@ -151,6 +189,7 @@ class MainWindow(QMainWindow):
                 # frame = self.clean_img(frame)
 
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            frame = self.resizeimage(frame, 2)
             frame_height, frame_width, _ = frame.shape
             frame = QImage(frame.data,
                            frame_width,
@@ -168,54 +207,54 @@ class MainWindow(QMainWindow):
         clean = cv2.merge((clean, clean, clean))
         return clean
 
-    def loadimage(self, name='buffer.png'):
-        self.generatearray()
+    # def loadimage(self, name='buffer.png'):
+    #     self.generatearray()
+    #
+    # def generatearray(self):
+    #     """ generate external matrix and 3*1 position offset matrix
+    #         | r_11  r_21  r_31 |    ||    | Tx |
+    #         | r_12  r_22  r_32 |    ||    | Ty |
+    #         | r_13  r_23  r_33 |    ||    | Tz |
+    #     """
+    #     Zc = 112  # self.Zc.value()
+    #     Zw = 1030
+    #
+    #     world = np.array(
+    #         [[[self.gp1x.value()], [self.gp1y.value()], [Zc]],
+    #          [[self.gp2x.value()], [self.gp2y.value()], [Zc]],
+    #          [[self.gp3x.value()], [self.gp3y.value()], [Zc]],
+    #          [[self.gp4x.value()], [self.gp4y.value()], [Zc]]])
+    #
+    #     pixmat = np.array(
+    #         [[[self.pp1x.value()], [self.pp1y.value()]],
+    #          [[self.pp2x.value()], [self.pp2y.value()]],
+    #          [[self.pp3x.value()], [self.pp3y.value()]],
+    #          [[self.pp4x.value()], [self.pp4y.value()]]])
+    #     ret, rvec, self.tevc = cv2.solvePnP(world, pixmat, mtx, dist)
+    #     scriz = np.array([[0, 0, 0, 1]])
+    #     self.rotation, b = cv2.Rodrigues(rvec)
+    #     self.aamat = np.c_[self.rotation, self.tevc]
+    #
+    # def checkpoint(self):
+    #     Zc = 1238
+    #     check = np.array([[self.inputpixelX.value()], [self.inputpixelY.value()], [1]])
+    #     endpoint = np.dot(np.linalg.inv(np.dot(mtx, self.rotation)), (Zc * check - np.dot(mtx, self.tevc)))
+    #     print(endpoint)
 
-    def generatearray(self):
-        """ generate external matrix and 3*1 position offset matrix
-            | r_11  r_21  r_31 |    ||    | Tx |
-            | r_12  r_22  r_32 |    ||    | Ty |
-            | r_13  r_23  r_33 |    ||    | Tz |
-        """
-        Zc = 112  # self.Zc.value()
-        Zw = 1030
-
-        world = np.array(
-            [[[self.gp1x.value()], [self.gp1y.value()], [Zc]],
-             [[self.gp2x.value()], [self.gp2y.value()], [Zc]],
-             [[self.gp3x.value()], [self.gp3y.value()], [Zc]],
-             [[self.gp4x.value()], [self.gp4y.value()], [Zc]]])
-
-        pixmat = np.array(
-            [[[self.pp1x.value()], [self.pp1y.value()]],
-             [[self.pp2x.value()], [self.pp2y.value()]],
-             [[self.pp3x.value()], [self.pp3y.value()]],
-             [[self.pp4x.value()], [self.pp4y.value()]]])
-        ret, rvec, self.tevc = cv2.solvePnP(world, pixmat, mtx, dist)
-        scriz = np.array([[0, 0, 0, 1]])
-        self.rotation, b = cv2.Rodrigues(rvec)
-        self.aamat = np.c_[self.rotation, self.tevc]
-
-    def checkpoint(self):
-        Zc = 1238
-        check = np.array([[self.inputpixelX.value()], [self.inputpixelY.value()], [1]])
-        endpoint = np.dot(np.linalg.inv(np.dot(mtx, self.rotation)), (Zc * check - np.dot(mtx, self.tevc)))
-        print(endpoint)
-
-    """
-    def testpoint(self):
-        Zc = 1238
-        mmtx  = np.array(([915.87877768, 0.00000000e+00,380.14276358, 0], 
-                      [0.00000000e+00,915.88537288, 314.01035384, 0],
-                     [0.00000000e+00, 0.00000000e+00, 1.00000000e+00, 0], 
-                     [0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 1]))
-        check = np.array([self.inputpixelX.value(), self.inputpixelY.value(), self.inputpixelZ.value(), 1])
-        print(check)
-        endpixel =  np.dot(np.dot(mmtx, self.xtranslate), check.T)/Zc
-        print(self.xtranslate)
-        print("*"*10)
-        print(endpixel)
-    """
+    # """
+    # def testpoint(self):
+    #     Zc = 1238
+    #     mmtx  = np.array(([915.87877768, 0.00000000e+00,380.14276358, 0],
+    #                   [0.00000000e+00,915.88537288, 314.01035384, 0],
+    #                  [0.00000000e+00, 0.00000000e+00, 1.00000000e+00, 0],
+    #                  [0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 1]))
+    #     check = np.array([self.inputpixelX.value(), self.inputpixelY.value(), self.inputpixelZ.value(), 1])
+    #     print(check)
+    #     endpixel =  np.dot(np.dot(mmtx, self.xtranslate), check.T)/Zc
+    #     print(self.xtranslate)
+    #     print("*"*10)
+    #     print(endpixel)
+    # """
 
     def calctrackobject(self, image):
         """tracking max rect object
@@ -287,30 +326,30 @@ class MainWindow(QMainWindow):
             thickness = int(np.sqrt(64 / float(i + 1)) * 2.5)
             cv2.line(frame1, pts[i - 1], pts[i], (0, 0, 255), thickness)
 
-    def outputGenerte(self, matrix):
-        """ Save the Generate matrix to .txt
-        """
-        filename, _ = QFileDialog.getSaveFileName(self, "Save File", "./test.txt", "Text files (*.txt)")
-        listdata = matrix.tolist()
-        if filename:
-            data = []
-            data1 = []
-            data2 = []
-            for e in range(0, 3):
-                data.append(str(listdata[0][e]))
-                data1.append(str(listdata[1][e]))
-                data2.append(str(listdata[2][e]))
-            print(data2)
-            with open(filename, 'w') as f:
-                f.write(str(data + '\n'))
-                f.write(str(data1 + '\n'))
-                f.write(str(data2 + '\n'))
+    # def outputGenerte(self, matrix):
+    #     """ Save the Generate matrix to .txt
+    #     """
+    #     filename, _ = QFileDialog.getSaveFileName(self, "Save File", "./test.txt", "Text files (*.txt)")
+    #     listdata = matrix.tolist()
+    #     if filename:
+    #         data = []
+    #         data1 = []
+    #         data2 = []
+    #         for e in range(0, 3):
+    #             data.append(str(listdata[0][e]))
+    #             data1.append(str(listdata[1][e]))
+    #             data2.append(str(listdata[2][e]))
+    #         print(data2)
+    #         with open(filename, 'w') as f:
+    #             f.write(str(data + '\n'))
+    #             f.write(str(data1 + '\n'))
+    #             f.write(str(data2 + '\n'))
 
-    @pyqtSlot()
-    def on_getpixel_clicked(self):
-        # for testing code
-        # self.testpoint()
-        self.checkpoint()
+    # @pyqtSlot()
+    # def on_getpixel_clicked(self):
+    #     # for testing code
+    #     # self.testpoint()
+    #     self.checkpoint()
 
     @pyqtSlot()
     def on_saveImage_clicked(self):

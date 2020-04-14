@@ -2,63 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a47a3628-670a-4a1f-910b-7d94a51f1ebb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/120matrix.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/1280720.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/600X800_resulotion.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/600X800_resulotion4_20.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/1280720/data.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/1280720/data10.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/1280720/data2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/1280720/data3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/1280720/data4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/1280720/data5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/1280720/data6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/1280720/data7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/1280720/data8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/1280720/data9.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data1/data10.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data1/data11.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data1/data12.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data1/data13.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data1/data14.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data1/data15.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data1/data16.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data1/data17.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data1/data18.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data10.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data11.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data2/data.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data2/data1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data2/data2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data2/data3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data2/data4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data2/data5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data2/data6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data2/data7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data2/data8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data2/data9.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data3/3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data3/4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data3/5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data3/6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data3/7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data3/data.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data3/data2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibation_data/data9.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/core/mainwindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/mainwindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/mainwindow.ui" beforeDir="false" afterPath="$PROJECT_DIR$/core/mainwindow.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/launch.py" beforeDir="false" afterPath="$PROJECT_DIR$/launch.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcodeandimage/test1code.py" beforeDir="false" afterPath="$PROJECT_DIR$/testcodeandimage/test1code.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -67,7 +12,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/opencv_with_python$launch.coverage" NAME="launch Coverage Results" MODIFIED="1586841277998" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/opencv_with_python$launch.coverage" NAME="launch Coverage Results" MODIFIED="1586847594220" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="1240440393">
@@ -82,26 +27,26 @@
           <entry key="gitignore" value="1" />
           <entry key="jpg" value="2" />
           <entry key="png" value="1" />
-          <entry key="py" value="5" />
+          <entry key="py" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Image" value="3" />
           <entry key="PLAIN_TEXT" value="1" />
-          <entry key="Python" value="5" />
+          <entry key="Python" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gitignore" value="29" />
-          <entry key="py" value="984" />
+          <entry key="py" value="1589" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="29" />
-          <entry key="Python" value="984" />
+          <entry key="Python" value="1589" />
         </counts>
       </usages-collector>
     </session>
@@ -123,24 +68,29 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/mainwindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="115" column="42" selection-start-line="115" selection-start-column="42" selection-end-line="115" selection-end-column="42" />
+            <state relative-caret-position="277">
+              <caret line="196" column="44" lean-forward="true" selection-start-line="196" selection-start-column="44" selection-end-line="196" selection-end-column="44" />
               <folding>
                 <element signature="e#25#51#0" expanded="true" />
-                <marker date="1586841276663" expanded="true" signature="3099:3105" ph="..." />
-                <marker date="1586841276663" expanded="true" signature="3156:3276" ph="..." />
-                <marker date="1586841276663" expanded="true" signature="3522:3559" ph="..." />
-                <marker date="1586841276663" expanded="true" signature="3613:3640" ph="..." />
+                <marker date="1586846038752" expanded="true" signature="3099:3105" ph="..." />
+                <marker date="1586846038752" expanded="true" signature="3156:3276" ph="..." />
+                <marker date="1586846038752" expanded="true" signature="3487:4113" ph="..." />
+                <marker date="1586846038752" expanded="true" signature="4167:4204" ph="..." />
+                <marker date="1586846038752" expanded="true" signature="4746:4765" ph="..." />
+                <marker date="1586846038752" expanded="true" signature="5475:5595" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../knife_handle_error/core/representation/geometric.py">
+        <entry file="file://$PROJECT_DIR$/core/VideoWidget.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1094">
-              <caret line="456" column="49" selection-start-line="456" selection-start-column="37" selection-end-line="456" selection-end-column="49" />
+            <state relative-caret-position="220">
+              <caret line="10" column="16" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="16" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -159,6 +109,21 @@
       <find>model</find>
       <find>test</find>
       <find>image_box</find>
+      <find>VideoWidget</find>
+      <find>dl</find>
+      <find>setimage</find>
+      <find>frame</find>
+      <find>VidFrameGUI</find>
+      <find>load</find>
+      <find>QFileDialog</find>
+      <find>calctrackobject</find>
+      <find>VidFrame</find>
+      <find>update_time</find>
+      <find>running</find>
+      <find>setMinimumSize</find>
+      <find>setImage</find>
+      <find>r</find>
+      <find>resizeimage</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -276,13 +241,13 @@
     <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.21839081" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21774796" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
       <window_info anchor="bottom" id="Python Console" />
-      <window_info anchor="bottom" id="Terminal" weight="0.3299435" />
+      <window_info anchor="bottom" id="Terminal" weight="0.32918552" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -371,16 +336,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../knife_handle_error/core/mainwindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="113" column="37" selection-start-line="113" selection-start-column="26" selection-end-line="113" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/VideoWidget.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="10" column="16" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/core/mainwindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="115" column="42" selection-start-line="115" selection-start-column="42" selection-end-line="115" selection-end-column="42" />
+        <state relative-caret-position="277">
+          <caret line="196" column="44" lean-forward="true" selection-start-line="196" selection-start-column="44" selection-end-line="196" selection-end-column="44" />
           <folding>
             <element signature="e#25#51#0" expanded="true" />
-            <marker date="1586841276663" expanded="true" signature="3099:3105" ph="..." />
-            <marker date="1586841276663" expanded="true" signature="3156:3276" ph="..." />
-            <marker date="1586841276663" expanded="true" signature="3522:3559" ph="..." />
-            <marker date="1586841276663" expanded="true" signature="3613:3640" ph="..." />
+            <marker date="1586846038752" expanded="true" signature="3099:3105" ph="..." />
+            <marker date="1586846038752" expanded="true" signature="3156:3276" ph="..." />
+            <marker date="1586846038752" expanded="true" signature="3487:4113" ph="..." />
+            <marker date="1586846038752" expanded="true" signature="4167:4204" ph="..." />
+            <marker date="1586846038752" expanded="true" signature="4746:4765" ph="..." />
+            <marker date="1586846038752" expanded="true" signature="5475:5595" ph="..." />
           </folding>
         </state>
       </provider>
