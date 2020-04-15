@@ -58,7 +58,6 @@ class MainWindow(QMainWindow):
         toolbox = ["threshold", "Canny", "Houghline", "morphologyEx", "crop image", "dilate", "findContours"]
         # self.model.setStringList(li)
         self.image_box.addItems(toolbox)
-        self.listView.setModel(self.model)
 
     def update_time(self):
         self.currTimeLabel.setText(datetime.datetime.now().strftime('%I:%M:%S %p'))
@@ -104,16 +103,17 @@ class MainWindow(QMainWindow):
 
     @pyqtSlot()
     def on_add_list_view_clicked(self):
-
-        row = self.listView.currentIndex().row()
-        print(row)
-        if row == -1:
-            row = 0
-        self.model.insertRow(row)
-        index = self.model.index(row)
-
         name = self.image_box.currentText()
-        self.model.setData(index, f"{name}")
+        self.listWidget.addItem(QListWidgetItem(name))
+        # row = self.listView.currentIndex().row()
+        # print(row)
+        # if row == -1:
+        #     row = 0
+        # self.model.insertRow(row)
+        # index = self.model.index(row)
+        #
+        # name = self.image_box.currentText()
+        # self.model.setData(index, f"{name}")
 
     @pyqtSlot()
     def on_load_image_btn_clicked(self):
@@ -142,21 +142,21 @@ class MainWindow(QMainWindow):
 
     @pyqtSlot()
     def on_delete_list_view_clicked(self):
-        row = self.listView.currentIndex().row()
-        self.model.removeRows(row, 1)
+        self.listWidget.takeItem(self.listWidget.count() - 1)
+        pass
 
     # TODO: this two function for move up or down the model list  4/14
     @pyqtSlot()
     def on_move_up_btn_clicked(self):
-        row = self.listView.currentIndex().row()
-        index = self.model.index(row)
-        index2 = self.model.index(row - 1)
+        index = self.listWidget.currentRow()
+        self.listWidget.insertItem(index - 1, self.listWidget.takeItem(index))
+        self.listWidget.setCurrentRow(index - 1)
 
     @ pyqtSlot()
     def on_move_down_btn_clicked(self):
-        row = self.listView.currentIndex().row()
-        index = self.model.index(row)
-        pass
+        index = self.listWidget.currentRow()
+        self.listWidget.insertItem(index + 1, self.listWidget.takeItem(index))
+        self.listWidget.setCurrentRow(index + 1)
 
     # def InConvertImage(self, frame1):
     #     """ the convert will convert inner matrix to the frame.

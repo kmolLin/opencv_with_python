@@ -125,7 +125,7 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QListView" name="listView"/>
+       <widget class="QListWidget" name="listWidget"/>
       </item>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -181,7 +181,6 @@
     </item>
    </layout>
    <zorder></zorder>
-   <zorder>verticalLayoutWidget</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
