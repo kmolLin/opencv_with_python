@@ -49,7 +49,7 @@ class MainWindow(QMainWindow):
         self.startButton.setFocus()
         toolbox = ["threshold", "Canny", "Houghline", "morphologyEx", "crop image", "dilate", "findContours"]
         self.image_box.addItems(toolbox)
-        self.listWidget.itemDoubleClicked.connect(self.getwidget)
+        self.listWidget.itemDoubleClicked.connect(self.get_widget)
         self.model = []
         self.lenpos = 0
 
@@ -149,7 +149,7 @@ class MainWindow(QMainWindow):
         self.listWidget.insertItem(index + 1, self.listWidget.takeItem(index))
         self.listWidget.setCurrentRow(index + 1)
 
-    def getwidget(self, qitem):
+    def get_widget(self, qitem):
         print(qitem.text())
         index = self.listWidget.row(qitem)
         print(index)
@@ -157,6 +157,18 @@ class MainWindow(QMainWindow):
             dlg = ThresholdDlg()
             dlg.exec_()
             print(dlg.comboText)
+        elif qitem.text() == 'Canny':
+            dlg = CannyDlg()
+            dlg.exec_()
+        elif qitem.text() == 'morphologyEx':
+            dlg = MorphologyDlg()
+            dlg.exec_()
+        elif qitem.text() == 'dilate':
+            dlg = DilateDlg()
+            dlg.exec_()
+        elif qitem.text() == 'erode':
+            dlg = ErodeDlg()
+            dlg.exec_()
 
     def resizeimage(self, image, scale):
         frame_height, frame_width, _ = image.shape
