@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a47a3628-670a-4a1f-910b-7d94a51f1ebb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/dliatedlg.ui" beforeDir="false" afterPath="$PROJECT_DIR$/core/dilatedlg.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/mainwindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/mainwindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/thresholddlg.ui" beforeDir="false" afterPath="$PROJECT_DIR$/core/thresholddlg.ui" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,38 +24,6 @@
         <option value="Python Script" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>generatearray</find>
-      <find>mtx</find>
-      <find>InConvertImage</find>
-      <find>setup_timers</find>
-      <find>update_frame</find>
-      <find>timers</find>
-      <find>@pyqt</find>
-      <find>test</find>
-      <find>image_box</find>
-      <find>VideoWidget</find>
-      <find>dl</find>
-      <find>setimage</find>
-      <find>frame</find>
-      <find>VidFrameGUI</find>
-      <find>load</find>
-      <find>QFileDialog</find>
-      <find>calctrackobject</find>
-      <find>VidFrame</find>
-      <find>update_time</find>
-      <find>running</find>
-      <find>setMinimumSize</find>
-      <find>setImage</find>
-      <find>r</find>
-      <find>resizeimage</find>
-      <find>model</find>
-      <find>self.model</find>
-      <find>listView</find>
-      <find>move_up_btn</find>
-    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -167,7 +138,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1586831510808</updated>
-      <workItem from="1586962413484" duration="1505000" />
+      <workItem from="1586962413484" duration="6976000" />
     </task>
     <servers />
   </component>
@@ -184,5 +155,8 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/opencv_with_python$launch.coverage" NAME="launch Coverage Results" MODIFIED="1586971352127" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
