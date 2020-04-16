@@ -117,10 +117,21 @@ class MorphologyDlg(QDialog):
     def __init__(self, parent, init_tuple, init_dict):
         super(MorphologyDlg, self).__init__()
         loadUi("core/morphologydlg.ui", self)
+
+        if not init_tuple:
+            pass
+        else:
+            pass
+
         self.buttonBox.accepted.connect(self.get_value)
         self.command = None
         self.MORPH_kernel = None
         self.kernel_size = None
+        self.finish_image = None
+        self.iteration_spin.valueChanged.connect(self.update_image)
+        self.image = parent.processing_img
+        self.VidFrame = parent.VidFrame
+        self.finish_image = None
 
     def get_value(self):
         size = self.kernel_size_spin.value()
@@ -128,6 +139,18 @@ class MorphologyDlg(QDialog):
                                            , (size, size))
         method = getattr(cv2, self.morphset_combo.currentText())
         self.command = ImageProcess('morphologyEx', (method, kernel), {'iterations': self.iteration_spin.value()})
+
+    def update_image(self):
+        size = self.kernel_size_spin.value()
+        kernel = cv2.getStructuringElement(getattr(cv2, self.kernel_combo.currentText()), (size, size))
+        method = getattr(cv2, self.morphset_combo.currentText())
+        change_img = cv2.morphologyEx(self.image,
+                                      method,
+                                      kernel,
+                                      iterations=self.iteration_spin.value())
+        # print(self.image)
+        self.VidFrame.setImage(image2Frame(change_img))
+        self.finish_image = change_img
 
 
 class DilateDlg(QDialog):
@@ -137,12 +160,24 @@ class DilateDlg(QDialog):
         loadUi("core/dilatedlg.ui", self)
         self.buttonBox.accepted.connect(self.get_value)
         self.command = None
+        self.image = parent.processing_img
+        self.VidFrame = parent.VidFrame
+        self.finish_image = None
 
     def get_value(self):
         size = self.kernel_size_spin.value()
         kernel = cv2.getStructuringElement(getattr(cv2, self.kernel_combo.currentText())
                                            , (size, size))
         self.command = ImageProcess('dilate', (kernel,), {'iterations': self.iteration_spin.value()})
+
+    def update_image(self):
+        size = self.kernel_size_spin.value()
+        kernel = cv2.getStructuringElement(getattr(cv2, self.kernel_combo.currentText()), (size, size))
+        change_img = cv2.dilate(self.image,
+                                kernel,
+                                iterations=self.iteration_spin.value())
+        self.VidFrame.setImage(image2Frame(change_img))
+        self.finish_image = change_img
 
 
 class ErodeDlg(QDialog):

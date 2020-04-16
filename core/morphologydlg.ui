@@ -135,7 +135,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="iteration_spin"/>
+        <widget class="QSpinBox" name="iteration_spin">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
