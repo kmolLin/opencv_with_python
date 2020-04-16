@@ -112,7 +112,6 @@ class ThresholdDlg(QDialog):
 
 
 class MorphologyDlg(QDialog):
-    # TODO : morphology want to build the kernel in this class
 
     def __init__(self, parent, init_tuple, init_dict):
         super(MorphologyDlg, self).__init__()
@@ -163,6 +162,7 @@ class DilateDlg(QDialog):
         self.image = parent.processing_img
         self.VidFrame = parent.VidFrame
         self.finish_image = None
+        self.iteration_spin.valueChanged.connect(self.update_image)
 
     def get_value(self):
         size = self.kernel_size_spin.value()
@@ -187,6 +187,10 @@ class ErodeDlg(QDialog):
         loadUi("core/dilatedlg.ui", self)
         self.buttonBox.accepted.connect(self.get_value)
         self.command = None
+        self.image = parent.processing_img
+        self.VidFrame = parent.VidFrame
+        self.finish_image = None
+        self.iteration_spin.valueChanged.connect(self.update_image)
 
     def get_value(self):
         size = self.kernel_size_spin.value()
@@ -194,3 +198,63 @@ class ErodeDlg(QDialog):
                                            , (size, size))
         self.command = ImageProcess('erode', (kernel,), {'iterations': self.iteration_spin.value()})
 
+    def update_image(self):
+        size = self.kernel_size_spin.value()
+        kernel = cv2.getStructuringElement(getattr(cv2, self.kernel_combo.currentText()), (size, size))
+        change_img = cv2.erode(self.image,
+                               kernel,
+                               iterations=self.iteration_spin.value())
+        self.VidFrame.setImage(image2Frame(change_img))
+        self.finish_image = change_img
+
+
+class BlurDlg(QDialog):
+    # TODO: need to check why blur have error, % notice this method isn't can use
+    def __init__(self, parent, init_tuple, init_dict):
+        super(BlurDlg, self).__init__()
+        loadUi("core/blurdlg.ui", self)
+        self.buttonBox.accepted.connect(self.get_value)
+        self.command = None
+        self.image = parent.processing_img
+        self.VidFrame = parent.VidFrame
+        self.finish_image = None
+        # self.iteration_spin.valueChanged.connect(self.update_image)
+        self.blur_combo.currentTextChanged.connect(self.change_title)
+        self.blur_combo.currentTextChanged.connect(self.update_image)
+
+    def change_title(self):
+        text = self.blur_combo.currentText()
+        if text is 'blur':
+            self.sigma_spin.hide()
+        elif text is 'GaussianBlur':
+            self.sigma_spin.show()
+        elif text is 'medianBlur':
+            self.sigma_spin.setText('median value')
+
+    def get_value(self):
+        name = self.blur_combo.currentText()
+        size = self.size_spin.value()
+        cotainer_tuple = None
+        if name is 'blur':
+            cotainer_tuple = (size, size)
+        elif name is 'GaussianBlur':
+            cotainer_tuple = ((size, size), self.sigma_spin.value())
+        elif name is 'medianBlur':
+            cotainer_tuple = (self.sigma_spin.value())
+        self.command = ImageProcess(name, (cotainer_tuple,), {})
+
+    def update_image(self):
+        name = self.blur_combo.currentText()
+        print(name)
+        size = self.size_spin.value()
+        cotainer_tuple = None
+        if name is 'blur':
+            cotainer_tuple = (size, size)
+        elif name is 'GaussianBlur':
+            cotainer_tuple = ((size, size), self.sigma_spin.value())
+        elif name is 'medianBlur':
+            cotainer_tuple = (self.sigma_spin.value())
+        func = getattr(cv2, name)
+        change_img = func(self.image, cotainer_tuple)
+        self.VidFrame.setImage(image2Frame(change_img))
+        self.finish_image = change_img

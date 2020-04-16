@@ -15,10 +15,10 @@ class Dialog(QDialog, Ui_Dialog):
     calc the matrix
     """
     def __init__(self, parent=None):
-        
+
         super(Dialog, self).__init__(parent)
         self.setupUi(self)
-    
+
     @pyqtSlot()
     def on_calibation_clicked(self):
         self.w = self.chessew.value()
@@ -26,30 +26,30 @@ class Dialog(QDialog, Ui_Dialog):
         self.distance = self.chessboard_dis.value()
         self.locate = self.imagePath.text()
         print(self.locate)
-        
+
         self.calb = calibation(self.w, self.l , self.distance)
         self.ret, self.mtx, self.dist, self.rvecs, self.tvecs = self.calb.calcmatrix(self.locate)
         print(self.ret, self.mtx, self.dist)
         # TODO: need to calc
-        
+
     @pyqtSlot()
     def on_undistort_clicked(self):
         filename, _ = QFileDialog.getOpenFileName(self, "Save File", ".calibation_data/data.jpg", "Text files (*.jpg)")
         if filename:
             self.calb.Opencv_undistort(filename, self.mtx, self.dist)
-    
+
     @pyqtSlot()
     def on_initundistort_clicked(self):
         filename, _ = QFileDialog.getOpenFileName(self, "Save File", ".calibation_data/data.jpg", "Text files (*.jpg)")
         if filename:
             self.calb.Opencv_initdis(filename, self.mtx, self.dist)
-    
+
     @pyqtSlot()
     def on_imagePbtn_clicked(self):
         dir = QFileDialog.getExistingDirectory(self, "Save File", ".calibation_data/data.jpg", QFileDialog.ShowDirsOnly)
         if dir:
             self.imagePath.insert(dir)
-    
+
     @pyqtSlot()
     def on_exportmatrix_clicked(self):
         filename, _ = QFileDialog.getSaveFileName(self, "Save File", "./test.txt", "Text files (*.txt)")

@@ -20,7 +20,7 @@ import sys
 from .Ui_mainwindow import Ui_MainWindow
 from .parseimage import parseImage
 from .image_class import CommandStack, ImageProcess
-from .imagedlg import CannyDlg, DilateDlg, ErodeDlg, ThresholdDlg, MorphologyDlg
+from .imagedlg import CannyDlg, DilateDlg, ErodeDlg, ThresholdDlg, MorphologyDlg, BlurDlg
 
 greenLower = (100, 43, 46)
 greenUpper = (124, 255, 255)
@@ -47,7 +47,11 @@ class MainWindow(QMainWindow):
 
         self.setup_timers()
         self.startButton.setFocus()
-        toolbox = ["threshold", "Canny", "Houghline", "morphologyEx", "crop image", "dilate", "findContours"]
+        toolbox = ["threshold", "Canny",
+                   "Houghline", "morphologyEx",
+                   "crop image", "dilate",
+                   "findContours", 'erode',
+                   "Blur", ]
         self.image_box.addItems(toolbox)
         self.listWidget.itemDoubleClicked.connect(self.get_widget)
         self.model = []
@@ -144,7 +148,6 @@ class MainWindow(QMainWindow):
             del self.model[self.listWidget.count() - 1]
         self.lenpos = self.lenpos - 1
 
-    # TODO: this two function for move up or down the model list  4/14
     @pyqtSlot()
     def on_move_up_btn_clicked(self):
         index = self.listWidget.currentRow()
@@ -159,7 +162,6 @@ class MainWindow(QMainWindow):
         self.listWidget.setCurrentRow(index + 1)
 
     def get_widget(self, qitem):
-        # TODO: if user not double click dlg, the value is None need to add default value in function
         index = self.listWidget.row(qitem)
         # print(index)
         if not self.model[index].args:
@@ -183,8 +185,10 @@ class MainWindow(QMainWindow):
         elif qitem.text() == 'erode':
             dlg = ErodeDlg(self, init_tuple, init_dict)
             dlg.exec_()
-        else:
-            pass
+        elif qitem.text() == 'Blur':
+            dlg = BlurDlg(self, init_tuple, init_dict)
+            dlg.exec_()
+
         self.processing_img = dlg.finish_image
         self.model[index] = dlg.command
 
