@@ -16,6 +16,9 @@ class ImageProcess:
         self.args = args
         self.kwd = kwds
 
+    def __repr__(self):
+        return f"name: {self.name}, parameter: {self.args}, keyword: {self.kwd}"
+
 
 class CommandStack:
 
@@ -24,6 +27,10 @@ class CommandStack:
 
     def append(self, name: str, args: tuple, kwds: dict):
         self.stack.append(ImageProcess(name, args, kwds))
+
+    def insertlist(self, tmp: list):
+        for i in tmp:
+            self.stack.append(i)
 
     def apply(self, img: ndarray) -> ndarray:
         # TODO: process for finish image
