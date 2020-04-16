@@ -120,20 +120,25 @@ class MainWindow(QMainWindow):
         name = self.image_box.currentText()
         self.listWidget.addItem(QListWidgetItem(name))
         self.lenpos = self.lenpos + 1
+        self.model.append(())
 
     @pyqtSlot()
-    def on_insert_list_view_clicked(self):
+    def on_apply_select_clicked(self):
         print(self.lenpos)
-        for i in range(self.lenpos):
-            print(self.listWidget.item(i).text())
+        print(self.model)
+        commandstack = CommandStack()
+        commandstack.insertlist(self.model)
+        print(commandstack.script())
 
     @pyqtSlot()
     def on_delete_list_view_clicked(self):
         if self.listWidget.currentRow() != -1:
             index = self.listWidget.currentRow()
             self.listWidget.takeItem(index)
+            del self.model[index]
         else:
             self.listWidget.takeItem(self.listWidget.count() - 1)
+            del self.model[self.listWidget.count() - 1]
         self.lenpos = self.lenpos - 1
 
     # TODO: this two function for move up or down the model list  4/14
@@ -142,6 +147,7 @@ class MainWindow(QMainWindow):
         index = self.listWidget.currentRow()
         self.listWidget.insertItem(index - 1, self.listWidget.takeItem(index))
         self.listWidget.setCurrentRow(index - 1)
+        self.model[index], self.model[index - 1] = self.model[index - 1], self.model[index]
 
     @ pyqtSlot()
     def on_move_down_btn_clicked(self):
@@ -150,13 +156,12 @@ class MainWindow(QMainWindow):
         self.listWidget.setCurrentRow(index + 1)
 
     def get_widget(self, qitem):
-        print(qitem.text())
+        # TODO: if user not double click dlg, the value is None need to add default value in function
         index = self.listWidget.row(qitem)
-        print(index)
+        # print(index)
         if qitem.text() == 'threshold':
             dlg = ThresholdDlg()
             dlg.exec_()
-
         elif qitem.text() == 'Canny':
             dlg = CannyDlg()
             dlg.exec_()
@@ -169,7 +174,10 @@ class MainWindow(QMainWindow):
         elif qitem.text() == 'erode':
             dlg = ErodeDlg()
             dlg.exec_()
-        print(dlg.stack)
+        else:
+            pass
+
+        self.model[index] = dlg.command
 
     def resizeimage(self, image, scale):
         frame_height, frame_width, _ = image.shape

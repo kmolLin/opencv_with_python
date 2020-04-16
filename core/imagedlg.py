@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import *
 
-from core.image_class import CommandStack
+from core.image_class import CommandStack, ImageProcess
 
 
 class CannyDlg(QDialog):
@@ -23,13 +23,13 @@ class CannyDlg(QDialog):
         self.minvalue = None
         self.aperture_size = None
         self.buttonBox.accepted.connect(self.get_value)
-        self.stack = CommandStack()
+        self.command = None
 
     def get_value(self):
-        self.stack.append('CannyW',
-                          (self.min_value_spin.value(),
-                           self.max_value_spin.value(),
-                           self.aperturesize_spin.value()), {})
+        self.command = ImageProcess('CannyW',
+                                  (self.min_value_spin.value(),
+                                   self.max_value_spin.value(),
+                                   self.aperturesize_spin.value()), {})
 
 
 class ThresholdDlg(QDialog):
@@ -40,13 +40,13 @@ class ThresholdDlg(QDialog):
         self.maxvalue = None
         self.minvalue = None
         self.buttonBox.accepted.connect(self.get_value)
-        self.stack = CommandStack()
+        self.command = None
 
     def get_value(self):
-        self.stack.append('threshold',
-                          (self.min_value_spin.value(),
-                           self.max_value_spin.value(),
-                           getattr(cv2, self.threshold_combo.currentText())), {})
+        self.command = ImageProcess('threshold',
+                                  (self.min_value_spin.value(),
+                                   self.max_value_spin.value(),
+                                   getattr(cv2, self.threshold_combo.currentText())), {})
 
 
 class MorphologyDlg(QDialog):
@@ -56,7 +56,7 @@ class MorphologyDlg(QDialog):
         super(MorphologyDlg, self).__init__()
         loadUi("core/morphologydlg.ui", self)
         self.buttonBox.accepted.connect(self.get_value)
-        self.stack = CommandStack()
+        self.command = None
         self.MORPH_kernel = None
         self.kernel_size = None
 
@@ -65,7 +65,7 @@ class MorphologyDlg(QDialog):
         kernel = cv2.getStructuringElement(getattr(cv2, self.kernel_combo.currentText())
                                            , (size, size))
         method = getattr(cv2, self.morphset_combo.currentText())
-        self.stack.append('morphologyEx', (method, kernel), {'iterations': self.iteration_spin.value()})
+        self.command = ImageProcess('morphologyEx', (method, kernel), {'iterations': self.iteration_spin.value()})
 
 
 class DilateDlg(QDialog):
@@ -74,13 +74,13 @@ class DilateDlg(QDialog):
         super(DilateDlg, self).__init__()
         loadUi("core/dilatedlg.ui", self)
         self.buttonBox.accepted.connect(self.get_value)
-        self.stack = CommandStack()
+        self.command = None
 
     def get_value(self):
         size = self.kernel_size_spin.value()
         kernel = cv2.getStructuringElement(getattr(cv2, self.kernel_combo.currentText())
                                            , (size, size))
-        self.stack.append('dilate', (kernel,), {'iterations': self.iteration_spin.value()})
+        self.command = ImageProcess('dilate', (kernel,), {'iterations': self.iteration_spin.value()})
 
 
 class ErodeDlg(QDialog):
@@ -89,11 +89,11 @@ class ErodeDlg(QDialog):
         super(ErodeDlg, self).__init__()
         loadUi("core/dilatedlg.ui", self)
         self.buttonBox.accepted.connect(self.get_value)
-        self.stack = CommandStack()
+        self.command = None
 
     def get_value(self):
         size = self.kernel_size_spin.value()
         kernel = cv2.getStructuringElement(getattr(cv2, self.kernel_combo.currentText())
                                            , (size, size))
-        self.stack.append('erode', (kernel,), {'iterations': self.iteration_spin.value()})
+        self.command = ImageProcess('erode', (kernel,), {'iterations': self.iteration_spin.value()})
 
