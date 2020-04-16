@@ -4,10 +4,14 @@ __license__ = "AGPL"
 __email__ = "pyquino@gmail.com"
 
 import sys
+import cv2
+
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import *
+
+from core.image_class import CommandStack
 
 
 class CannyDlg(QDialog):
@@ -19,11 +23,13 @@ class CannyDlg(QDialog):
         self.minvalue = None
         self.aperture_size = None
         self.buttonBox.accepted.connect(self.get_value)
+        self.stack = CommandStack()
 
     def get_value(self):
-        self.maxvalue = self.max_value_spin.value()
-        self.minvalue = self.min_value_spin.value()
-        self.aperture_size = self.aperturesize_spin.value()
+        self.stack.append('CannyW',
+                          (self.min_value_spin.value(),
+                           self.max_value_spin.value(),
+                           self.aperturesize_spin.value()), {})
 
 
 class ThresholdDlg(QDialog):
@@ -33,13 +39,14 @@ class ThresholdDlg(QDialog):
         loadUi("core/thresholddlg.ui", self)
         self.maxvalue = None
         self.minvalue = None
-        self.comboText = None
         self.buttonBox.accepted.connect(self.get_value)
+        self.stack = CommandStack()
 
     def get_value(self):
-        self.maxvalue = self.max_value_spin.value()
-        self.minvalue = self.min_value_spin.value()
-        self.comboText = self.threshold_combo.currentText()
+        self.stack.append('threshold',
+                          (self.min_value_spin.value(),
+                           self.max_value_spin.value(),
+                           getattr(cv2, self.threshold_combo.currentText())), {})
 
 
 class MorphologyDlg(QDialog):
@@ -48,9 +55,17 @@ class MorphologyDlg(QDialog):
     def __init__(self):
         super(MorphologyDlg, self).__init__()
         loadUi("core/morphologydlg.ui", self)
+        self.buttonBox.accepted.connect(self.get_value)
+        self.stack = CommandStack()
+        self.MORPH_kernel = None
+        self.kernel_size = None
 
-    def test(self):
-        pass
+    def get_value(self):
+        size = self.kernel_size_spin.value()
+        kernel = cv2.getStructuringElement(getattr(cv2, self.kernel_combo.currentText())
+                                           , (size, size))
+        method = getattr(cv2, self.morphset_combo.currentText())
+        self.stack.append('morphologyEx', (method, kernel), {'iterations': self.iteration_spin.value()})
 
 
 class DilateDlg(QDialog):
@@ -58,9 +73,14 @@ class DilateDlg(QDialog):
     def __init__(self):
         super(DilateDlg, self).__init__()
         loadUi("core/dilatedlg.ui", self)
+        self.buttonBox.accepted.connect(self.get_value)
+        self.stack = CommandStack()
 
-    def test(self):
-        pass
+    def get_value(self):
+        size = self.kernel_size_spin.value()
+        kernel = cv2.getStructuringElement(getattr(cv2, self.kernel_combo.currentText())
+                                           , (size, size))
+        self.stack.append('dilate', (kernel,), {'iterations': self.iteration_spin.value()})
 
 
 class ErodeDlg(QDialog):
@@ -68,7 +88,12 @@ class ErodeDlg(QDialog):
     def __init__(self):
         super(ErodeDlg, self).__init__()
         loadUi("core/dilatedlg.ui", self)
+        self.buttonBox.accepted.connect(self.get_value)
+        self.stack = CommandStack()
 
-    def test(self):
-        pass
+    def get_value(self):
+        size = self.kernel_size_spin.value()
+        kernel = cv2.getStructuringElement(getattr(cv2, self.kernel_combo.currentText())
+                                           , (size, size))
+        self.stack.append('erode', (kernel,), {'iterations': self.iteration_spin.value()})
 

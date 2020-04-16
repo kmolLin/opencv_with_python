@@ -156,7 +156,7 @@ class MainWindow(QMainWindow):
         if qitem.text() == 'threshold':
             dlg = ThresholdDlg()
             dlg.exec_()
-            print(dlg.comboText)
+
         elif qitem.text() == 'Canny':
             dlg = CannyDlg()
             dlg.exec_()
@@ -169,6 +169,7 @@ class MainWindow(QMainWindow):
         elif qitem.text() == 'erode':
             dlg = ErodeDlg()
             dlg.exec_()
+        print(dlg.stack)
 
     def resizeimage(self, image, scale):
         frame_height, frame_width, _ = image.shape
